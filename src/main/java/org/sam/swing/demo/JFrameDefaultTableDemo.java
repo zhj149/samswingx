@@ -1,6 +1,7 @@
 package org.sam.swing.demo;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -33,9 +34,11 @@ import org.sam.swing.table.JSTableModel;
 import org.sam.swing.table.defaultImpl.JSTableDefaultBuilderImpl;
 import org.sam.swing.table.defaultImpl.JSTableModelDefaultLinster;
 import org.sam.swing.table.editor.JSTableCheckboxEditor;
+import org.sam.swing.table.editor.JSTableColorEditor;
 import org.sam.swing.table.editor.JSTableRadioButtonGroupEditor;
 import org.sam.swing.table.editor.JSTableSpinnerEditor;
 import org.sam.swing.table.renderer.JSTableCheckboxRenderer;
+import org.sam.swing.table.renderer.JSTableColorRenderer;
 import org.sam.swing.table.renderer.JSTableFormatRenderer;
 import org.sam.swing.table.renderer.JSTableRadioButtonGroupRenderer;
 import org.sam.swing.table.renderer.JSTableRowNumberRenderer;
@@ -192,10 +195,22 @@ public class JFrameDefaultTableDemo extends JFrame {
 		JCheckBox jCheckBox = new JCheckBox();
 		jCheckBox.setHorizontalAlignment(JCheckBox.CENTER);
 		col7.setCellEditor(new JSTableCheckboxEditor(jCheckBox));
+		
+		//颜色选择控件
+		JSTableColumn col8 = new JSTableColumn();
+		col8.setIdentifier("color");
+		col8.setTitle("颜色");
+		col8.setHeaderValue("颜色");
+		col8.setModelIndex(8);
+		col8.setWidth(15);
+		col8.setMaxWidth(50);
+		col8.setDefaultValue(Color.BLACK);
+		col8.setCellRenderer(new JSTableColorRenderer());
+		col8.setCellEditor(new JSTableColorEditor());
 
 		try {
 			JSTableBuilder<List<TestEntity>> builder = new JSTableDefaultBuilderImpl<>(TestEntity.class, col0, col1,
-					col2, col3,col4,col5,col6,col7);
+					col2, col3,col4,col5,col6,col7,col8);
 			colModel = builder.buildTableColumnModel();
 			tableModel = builder.buildTableModel();
 			table = new JSTable(tableModel, colModel);
@@ -216,6 +231,7 @@ public class JFrameDefaultTableDemo extends JFrame {
 						entity.setAge((i + 1) % 255);
 						entity.setRole(i % 3 == 0 ? 0 : (i % 2 == 1 ? 1 : 2));
 						entity.setOnDuty(i % 2 == 0);
+						entity.setColor(i % 2 == 0 ? Color.CYAN : Color.BLACK);
 						result.add(entity);
 					}
 					return result;

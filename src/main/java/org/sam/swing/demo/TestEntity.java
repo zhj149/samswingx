@@ -1,5 +1,6 @@
 package org.sam.swing.demo;
 
+import java.awt.Color;
 import java.util.Date;
 
 /**
@@ -63,6 +64,11 @@ public class TestEntity {
 	 * 角色
 	 */
 	private Integer role;
+	
+	/**
+	 * 颜色
+	 */
+	private Color color;
 
 	/**
 	 * 主键
@@ -174,6 +180,22 @@ public class TestEntity {
 
 	public void setGender(String gender) {
 		this.gender = gender;
+	}
+
+	/**
+	 * 颜色
+	 * @return
+	 */
+	public Color getColor() {
+		return color;
+	}
+
+	/**
+	 * 颜色
+	 * @param color
+	 */
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 	/**

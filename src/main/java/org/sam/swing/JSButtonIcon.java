@@ -16,7 +16,7 @@ public class JSButtonIcon implements Icon {
 	/**
 	 * 默认图标大小
 	 */
-	public static final int ICON_SIZE = 8;
+	public static final int ICON_SIZE = 20;
 	
 	/**
 	 * 图标宽度
@@ -26,7 +26,7 @@ public class JSButtonIcon implements Icon {
 	/**
 	 * 图标高度
 	 */
-	protected int iconHeight = ICON_SIZE;
+	protected int iconHeight = ICON_SIZE / 2;
 	
 	/**
 	 * 图标颜色
@@ -42,7 +42,7 @@ public class JSButtonIcon implements Icon {
 		Color oldColor = g.getColor();
 
 		g.setColor(iconColor);
-		g.fillOval(x, y, iconWidth, iconHeight);
+		g.fillRect(4, 4, c.getWidth() - 8, c.getHeight() - 8);
 		g.setColor(oldColor);
 
 	}
@@ -61,6 +61,22 @@ public class JSButtonIcon implements Icon {
 	@Override
 	public int getIconHeight() {
 		return iconHeight;
+	}
+	
+	/**
+	 * 设置宽度
+	 * @param iconWidth
+	 */
+	public void setIconWidth(int iconWidth) {
+		this.iconWidth = iconWidth;
+	}
+
+	/**
+	 * 设置高度
+	 * @param iconHeight
+	 */
+	public void setIconHeight(int iconHeight) {
+		this.iconHeight = iconHeight;
 	}
 
 	/**
