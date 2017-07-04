@@ -1,6 +1,5 @@
 package org.sam.swing.demo;
 
-import java.awt.Color;
 import java.util.Date;
 
 /**
@@ -68,7 +67,12 @@ public class TestEntity {
 	/**
 	 * 颜色
 	 */
-	private Color color;
+	private Integer color;
+	
+	/**
+	 * 备注
+	 */
+	private String remark;
 
 	/**
 	 * 主键
@@ -186,7 +190,7 @@ public class TestEntity {
 	 * 颜色
 	 * @return
 	 */
-	public Color getColor() {
+	public Integer getColor() {
 		return color;
 	}
 
@@ -194,8 +198,24 @@ public class TestEntity {
 	 * 颜色
 	 * @param color
 	 */
-	public void setColor(Color color) {
+	public void setColor(Integer color) {
 		this.color = color;
+	}
+
+	/**
+	 * 备注
+	 * @return
+	 */
+	public String getRemark() {
+		return remark;
+	}
+
+	/**
+	 * 备注
+	 * @param remark
+	 */
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 	/**

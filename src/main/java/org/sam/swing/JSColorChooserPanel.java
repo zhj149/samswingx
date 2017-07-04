@@ -11,7 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JColorChooser;
 import javax.swing.JPanel;
 
-public class JSPanelColorChooser extends JPanel {
+public class JSColorChooserPanel extends JPanel {
 
 	private static final long serialVersionUID = 8301312679935345851L;
 	
@@ -72,7 +72,7 @@ public class JSPanelColorChooser extends JPanel {
 	 * 带有颜色的构造函数
 	 * @param color
 	 */
-	public JSPanelColorChooser(Color color)
+	public JSColorChooserPanel(Color color)
 	{
 		this();
 		this.setColor(color);
@@ -81,7 +81,7 @@ public class JSPanelColorChooser extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public JSPanelColorChooser() {
+	public JSColorChooserPanel() {
 		setLayout(new BorderLayout(0, 0));
 		
 		colorChooser = new JColorChooser();

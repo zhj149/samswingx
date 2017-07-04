@@ -25,6 +25,7 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jdesktop.swingx.table.DatePickerCellEditor;
+import org.sam.swing.JSColorComboBox;
 import org.sam.swing.resource.ResourceLoader;
 import org.sam.swing.table.JSTable;
 import org.sam.swing.table.JSTableBuilder;
@@ -35,6 +36,7 @@ import org.sam.swing.table.defaultImpl.JSTableDefaultBuilderImpl;
 import org.sam.swing.table.defaultImpl.JSTableModelDefaultLinster;
 import org.sam.swing.table.editor.JSTableCheckboxEditor;
 import org.sam.swing.table.editor.JSTableColorEditor;
+import org.sam.swing.table.editor.JSTableFontEditor;
 import org.sam.swing.table.editor.JSTableRadioButtonGroupEditor;
 import org.sam.swing.table.editor.JSTableSpinnerEditor;
 import org.sam.swing.table.renderer.JSTableCheckboxRenderer;
@@ -88,7 +90,7 @@ public class JFrameDefaultTableDemo extends JFrame {
 
 		DefaultTableCellRenderer renderC = new DefaultTableCellRenderer();
 		renderC.setHorizontalAlignment(DefaultTableCellRenderer.CENTER);
-		
+
 		DefaultTableCellRenderer renderR = new DefaultTableCellRenderer();
 		renderR.setHorizontalAlignment(DefaultTableCellRenderer.RIGHT);
 
@@ -136,8 +138,8 @@ public class JFrameDefaultTableDemo extends JFrame {
 		DefaultCellEditor editorGender = new DefaultCellEditor(cbGender);
 		col3.setCellRenderer(renderC); // 居中显示
 		col3.setCellEditor(editorGender); // 普通的下拉列表框
-		
-		//以下是数字微调控件的示例
+
+		// 以下是数字微调控件的示例
 		JSTableColumn col4 = new JSTableColumn();
 		col4.setIdentifier("age");
 		col4.setTitle("年龄");
@@ -147,10 +149,10 @@ public class JFrameDefaultTableDemo extends JFrame {
 		col4.setMinWidth(25);
 		col4.setDefaultValue(1);
 		col4.setCellRenderer(renderR); // 右侧显示
-		//带有范围限定的
+		// 带有范围限定的
 		col4.setCellEditor(new JSTableSpinnerEditor(new JSpinner(new SpinnerNumberModel(1, 1, 255, 1))));
-		
-		//日期下拉控件
+
+		// 日期下拉控件
 		JSTableColumn col5 = new JSTableColumn();
 		col5.setIdentifier("birthday");
 		col5.setTitle("生日");
@@ -160,10 +162,10 @@ public class JFrameDefaultTableDemo extends JFrame {
 		col5.setMinWidth(85);
 		col5.setDefaultValue(null);
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		col5.setCellRenderer(new JSTableFormatRenderer(dateFormat , "0000-00-00"));
+		col5.setCellRenderer(new JSTableFormatRenderer(dateFormat, "0000-00-00"));
 		col5.setCellEditor(new DatePickerCellEditor(dateFormat));
-		
-		//单选按钮
+
+		// 单选按钮
 		JSTableColumn col6 = new JSTableColumn();
 		col6.setIdentifier("role");
 		col6.setTitle("角色");
@@ -172,15 +174,15 @@ public class JFrameDefaultTableDemo extends JFrame {
 		col6.setWidth(175);
 		col6.setMinWidth(175);
 		col6.setDefaultValue(1);
-		
-		Map<Integer,String> roles = new LinkedHashMap<>();
+
+		Map<Integer, String> roles = new LinkedHashMap<>();
 		roles.put(0, "管理员");
 		roles.put(1, "经理");
 		roles.put(2, "员工");
-		
-		col6.setCellRenderer(new JSTableRadioButtonGroupRenderer<Integer,String>(roles));
-		col6.setCellEditor(new JSTableRadioButtonGroupEditor<Integer,String>(roles));
-		
+
+		col6.setCellRenderer(new JSTableRadioButtonGroupRenderer<Integer, String>(roles));
+		col6.setCellEditor(new JSTableRadioButtonGroupEditor<Integer, String>(roles));
+
 		JSTableColumn col7 = new JSTableColumn();
 		col7.setIdentifier("onDuty");
 		col7.setTitle("在职状态");
@@ -195,8 +197,8 @@ public class JFrameDefaultTableDemo extends JFrame {
 		JCheckBox jCheckBox = new JCheckBox();
 		jCheckBox.setHorizontalAlignment(JCheckBox.CENTER);
 		col7.setCellEditor(new JSTableCheckboxEditor(jCheckBox));
-		
-		//颜色选择控件
+
+		// 颜色选择控件
 		JSTableColumn col8 = new JSTableColumn();
 		col8.setIdentifier("color");
 		col8.setTitle("颜色");
@@ -204,13 +206,23 @@ public class JFrameDefaultTableDemo extends JFrame {
 		col8.setModelIndex(8);
 		col8.setWidth(15);
 		col8.setMaxWidth(50);
-		col8.setDefaultValue(Color.BLACK);
+		col8.setDefaultValue(Color.BLACK.getRGB());
 		col8.setCellRenderer(new JSTableColorRenderer());
 		col8.setCellEditor(new JSTableColorEditor());
 
+		JSTableColumn col9 = new JSTableColumn();
+		col9.setIdentifier("remark");
+		col9.setTitle("字体");
+		col9.setHeaderValue("字体");
+		col9.setModelIndex(9);
+		col9.setWidth(15);
+		col9.setMaxWidth(125);
+		col9.setDefaultValue("");
+		col9.setCellEditor(new JSTableFontEditor());
+
 		try {
 			JSTableBuilder<List<TestEntity>> builder = new JSTableDefaultBuilderImpl<>(TestEntity.class, col0, col1,
-					col2, col3,col4,col5,col6,col7,col8);
+					col2, col3, col4, col5, col6, col7, col8,col9);
 			colModel = builder.buildTableColumnModel();
 			tableModel = builder.buildTableModel();
 			table = new JSTable(tableModel, colModel);
@@ -231,7 +243,8 @@ public class JFrameDefaultTableDemo extends JFrame {
 						entity.setAge((i + 1) % 255);
 						entity.setRole(i % 3 == 0 ? 0 : (i % 2 == 1 ? 1 : 2));
 						entity.setOnDuty(i % 2 == 0);
-						entity.setColor(i % 2 == 0 ? Color.CYAN : Color.BLACK);
+						entity.setColor(i % 2 == 0 ? Color.CYAN.getRGB() : Color.BLACK.getRGB());
+						entity.setRemark(i % 2 == 0 ? null : "");
 						result.add(entity);
 					}
 					return result;
@@ -318,6 +331,9 @@ public class JFrameDefaultTableDemo extends JFrame {
 			}
 		});
 		toolBar.add(btnSave);
+
+		JSColorComboBox cbColor = new JSColorComboBox();
+		toolBar.add(cbColor);
 	}
 
 }

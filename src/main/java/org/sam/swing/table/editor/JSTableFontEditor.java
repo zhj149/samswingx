@@ -1,7 +1,7 @@
 package org.sam.swing.table.editor;
 
-import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ItemEvent;
 
@@ -12,25 +12,24 @@ import javax.swing.JTree;
 import javax.swing.table.TableCellEditor;
 import javax.swing.tree.TreeCellEditor;
 
-import org.sam.swing.JSButtonIcon;
-import org.sam.swing.JSColorChooserDialog;
-import org.sam.swing.JSColorChooserDialog.ColorChooserLisenter;
+import org.sam.swing.JSFontChooserDialog;
+import org.sam.swing.JSFontChooserDialog.FontChooserLisenter;
 
 /**
- * 颜色编辑器
+ * 字体选择编辑器
  * 
  * @author sam
  *
  */
-public class JSTableColorEditor extends AbstractCellEditor implements TableCellEditor, TreeCellEditor {
+public class JSTableFontEditor extends AbstractCellEditor implements TreeCellEditor, TableCellEditor {
 
-	private static final long serialVersionUID = -1287059888797387629L;
+	private static final long serialVersionUID = 757140289750579347L;
 
 	/**
 	 * 操作代理对象
 	 */
 	private EditorDelegate delegate;
-	
+
 	/**
 	 * 当前的编辑控件
 	 */
@@ -39,37 +38,45 @@ public class JSTableColorEditor extends AbstractCellEditor implements TableCellE
 	/**
 	 * colorchoose对象
 	 */
-	protected JSColorChooserDialog colorChooser;
+	protected JSFontChooserDialog fontChooser;
 
 	/**
 	 * 带有初始化控件对象的操作
 	 * 
 	 * @param editor
 	 */
-	public JSTableColorEditor(JButton editor) {
+	public JSTableFontEditor(JButton editor) {
 		this.editorComponent = editor;
 	}
 
 	/**
 	 * 不带参数的默认构造函数
 	 */
-	public JSTableColorEditor() {
-		this(new JButton(new JSButtonIcon()));
+	public JSTableFontEditor() {
+		this(new JButton());
 
 		delegate = new EditorDelegate();
 		delegate.setClickCountToStart(2);
 
 		editorComponent.addActionListener(delegate);
 
-		if (colorChooser == null)
-			colorChooser = new JSColorChooserDialog();
+		if (fontChooser == null)
+			fontChooser = new JSFontChooserDialog();
 
-		this.colorChooser.addColorChooserLisenter(new ColorChooserLisenter() {
+		this.fontChooser.addFontChooserLisenter(new FontChooserLisenter() {
+
+			/**
+			 * 点击确定后执行的操作
+			 */
 			@Override
-			public void afterChoose(Color color) {
-				delegate.setValue(color);
+			public void afterChoose(Font font, String fontDecode) {
+				if (delegate.getCellEditorValue() instanceof Font)
+					delegate.setValue(font);
+				else if (delegate.getCellEditorValue() instanceof String)
+					delegate.setValue(fontDecode);
+				else
+					delegate.setValue(fontDecode);
 			}
-
 		});
 	}
 
@@ -104,9 +111,22 @@ public class JSTableColorEditor extends AbstractCellEditor implements TableCellE
 		delegate.setValue(value);
 
 		if (isSelected) {
-			JSButtonIcon icon = (JSButtonIcon) editorComponent.getIcon();
-			colorChooser.setColor(icon.getIconColor());
-			colorChooser.setVisible(true);
+			if (value == null) {
+				fontChooser.setVisible(true);
+			} else {
+				try {
+					
+					if (value instanceof String) {
+						fontChooser.setSelectFont(Font.decode(value.toString()));
+					} else if (value instanceof Font) {
+						fontChooser.setSelectFont((Font) value);
+					}
+					
+					fontChooser.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
 
 		return editorComponent;
@@ -129,25 +149,10 @@ public class JSTableColorEditor extends AbstractCellEditor implements TableCellE
 
 			super.setValue(value);
 
-			JSButtonIcon icon = (JSButtonIcon) editorComponent.getIcon();
 			try {
-
-				if (value == null) {
-					icon.setIconColor(Color.BLACK);
-					return;
-				}
-
-				if (value instanceof Integer) {
-					icon.setIconColor(new Color((Integer) value));
-				} else if (value instanceof Long) {
-					icon.setIconColor(new Color(((Long) value).intValue()));
-				} else if (value instanceof String) {
-					icon.setIconColor(Color.getColor(value.toString()));
-				} else if (value instanceof Color) {
-					icon.setIconColor((Color) value);
-				}
+				editorComponent.setText(value == null ? "" : value.toString());
 			} catch (Exception ex) {
-				icon.setIconColor(Color.BLACK);
+				editorComponent.setText("");
 			}
 
 		}
@@ -180,7 +185,7 @@ public class JSTableColorEditor extends AbstractCellEditor implements TableCellE
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JSTableColorEditor.this.stopCellEditing();
+			JSTableFontEditor.this.stopCellEditing();
 		}
 
 		/**
@@ -192,7 +197,8 @@ public class JSTableColorEditor extends AbstractCellEditor implements TableCellE
 		 */
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			JSTableColorEditor.this.stopCellEditing();
+			JSTableFontEditor.this.stopCellEditing();
 		}
 	}
+
 }
