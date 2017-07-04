@@ -33,7 +33,7 @@ public class JSFontChooserDialog extends JSDialog {
 	/**
 	 * 字体选择器
 	 */
-	private JSFontChooser fontChooser;
+	private JSFontChooserPanel fontChooser;
 
 	/**
 	 * 回调事件
@@ -80,7 +80,7 @@ public class JSFontChooserDialog extends JSDialog {
 		getContentPane().setLayout(new BorderLayout(0, 0));
 		setTitle("字体选择器");
 
-		fontChooser = new JSFontChooser();
+		fontChooser = new JSFontChooserPanel();
 		getContentPane().add(fontChooser, BorderLayout.CENTER);
 
 		JPanel panel = new JPanel();

@@ -22,7 +22,7 @@ import javax.swing.event.ListSelectionListener;
  * @author sam
  *
  */
-public class JSFontChooser extends JPanel {
+public class JSFontChooserPanel extends JPanel {
 
 	private static final long serialVersionUID = -174157514297834539L;
 
@@ -190,14 +190,14 @@ public class JSFontChooser extends JPanel {
 	 * 
 	 * @param font
 	 */
-	public JSFontChooser(Font font) {
+	public JSFontChooserPanel(Font font) {
 		init(font);
 	}
 
 	/**
 	 * 使用默认字体创建
 	 */
-	public JSFontChooser() {
+	public JSFontChooserPanel() {
 		this(FlyWeightFonts.getInstance().getFont(DEFAULT_FONT_NAME, DEFAULT_FONT_STYLE, DEFAULT_FONT_SIZE));
 	}
 
