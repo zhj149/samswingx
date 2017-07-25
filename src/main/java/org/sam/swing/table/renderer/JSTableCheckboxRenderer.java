@@ -22,14 +22,6 @@ public class JSTableCheckboxRenderer extends JCheckBox implements TableCellRende
 	 * 
 	 */
 	private static final long serialVersionUID = -5916141000327482269L;
-	
-	public JSTableCheckboxRenderer()
-	{
-		super();
-		this.setSelectedIcon(new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_NEW)));
-		this.setDisabledSelectedIcon(new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_DELETE)));
-		
-	}
 
 	/**
 	 * 
