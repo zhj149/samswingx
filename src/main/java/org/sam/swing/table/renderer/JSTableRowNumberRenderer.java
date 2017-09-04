@@ -11,6 +11,15 @@ import javax.swing.table.DefaultTableCellRenderer;
  *
  */
 public class JSTableRowNumberRenderer extends DefaultTableCellRenderer {
+	
+	/**
+	 * 行号渲染器
+	 * 默认居中
+	 */
+	public JSTableRowNumberRenderer(){
+		super();
+		this.setHorizontalAlignment(JSTableRowNumberRenderer.CENTER);
+	}
 
 	/**
 	 * 

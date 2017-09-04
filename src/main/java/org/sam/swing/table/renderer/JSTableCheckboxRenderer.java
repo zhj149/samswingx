@@ -3,12 +3,9 @@ package org.sam.swing.table.renderer;
 import java.awt.Component;
 import java.io.Serializable;
 
-import javax.swing.ImageIcon;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
-
-import org.sam.swing.resource.ResourceLoader;
 
 /**
  * 选择框风格的渲染器
@@ -29,7 +26,7 @@ public class JSTableCheckboxRenderer extends JCheckBox implements TableCellRende
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
-		
+
 		if (isSelected) {
 			this.setForeground(table.getSelectionForeground());
 			this.setBackground(table.getSelectionBackground());
@@ -37,17 +34,23 @@ public class JSTableCheckboxRenderer extends JCheckBox implements TableCellRende
 			this.setForeground(table.getForeground());
 			this.setBackground(table.getBackground());
 		}
+
+		boolean isSelect = false;
 		
 		if (value instanceof Integer) {
-			this.setSelected(Integer.valueOf(1).equals(value));
+			isSelect = Integer.valueOf(1).equals(value);
+		} else if (value instanceof Long) {
+			isSelect = Long.valueOf(1).equals(value);
 		} else if (value instanceof Boolean) {
-			this.setSelected((Boolean) value);
+			isSelect = Boolean.TRUE.equals(value); 
 		} else if (value instanceof String) {
-			this.setSelected("true".equals(value));
+			isSelect = "true".equals(value);
 		} else if (value instanceof Character) {
-			this.setSelected(Character.valueOf('t').equals(value));
+			isSelect = Character.valueOf('t').equals(value);
 		}
 		
+		this.setSelected(isSelect);
+
 		return this;
 	}
 

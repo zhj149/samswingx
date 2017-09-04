@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -33,7 +35,7 @@ import org.sam.swing.table.JSTableColumn;
 import org.sam.swing.table.JSTableColumnModel;
 import org.sam.swing.table.JSTableModel;
 import org.sam.swing.table.defaultImpl.JSTableDefaultBuilderImpl;
-import org.sam.swing.table.defaultImpl.JSTableModelDefaultLinster;
+import org.sam.swing.table.defaultImpl.JSTableModelDefaultAdapter;
 import org.sam.swing.table.editor.JSTableCheckboxEditor;
 import org.sam.swing.table.editor.JSTableColorEditor;
 import org.sam.swing.table.editor.JSTableFontEditor;
@@ -227,7 +229,7 @@ public class JFrameDefaultTableDemo extends JFrame {
 			tableModel = builder.buildTableModel();
 			table = new JSTable(tableModel, colModel);
 
-			tableModel.setTableModelLinster(new JSTableModelDefaultLinster<TestEntity>(tableModel) {
+			tableModel.setTableModelLinster(new JSTableModelDefaultAdapter<TestEntity>(tableModel) {
 				/**
 				 * 加载数据的方法
 				 */
@@ -292,6 +294,7 @@ public class JFrameDefaultTableDemo extends JFrame {
 			}
 		});
 		toolBar.add(btnEditor);
+		
 		JButton btnAdd = new JButton("新增", new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_NEW)));
 		btnAdd.addActionListener(new ActionListener() {
 			@Override

@@ -5,6 +5,7 @@ import javax.swing.JCheckBox;
 
 /**
  * 带有多种值类型的checkbox工具
+ * 
  * @author sam
  *
  */
@@ -14,17 +15,17 @@ public class JSTableCheckboxEditor extends DefaultCellEditor {
 	 * 
 	 */
 	private static final long serialVersionUID = 545401568684102849L;
-	
+
 	/**
 	 * 不带参数的构造函数
 	 */
-	public JSTableCheckboxEditor()
-	{
+	public JSTableCheckboxEditor() {
 		this(new JCheckBox());
 	}
 
 	/**
 	 * 带参数的构造函数
+	 * 
 	 * @param checkBox
 	 */
 	public JSTableCheckboxEditor(JCheckBox checkBox) {
@@ -33,25 +34,35 @@ public class JSTableCheckboxEditor extends DefaultCellEditor {
 		delegate = new EditorDelegate() {
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public void setValue(Object value) {
+				
+				super.setValue(value);
+				boolean isSelected = false;
 
 				if (value instanceof Integer) {
-					checkBox.setSelected(Integer.valueOf(1).equals(value));
+					isSelected = Integer.valueOf(1).equals(value);
+				} else if (value instanceof Long) {
+					isSelected = Long.valueOf(1L).equals(value);
 				} else if (value instanceof Boolean) {
-					checkBox.setSelected((Boolean) value);
+					isSelected = Boolean.TRUE.equals(value);
 				} else if (value instanceof String) {
-					checkBox.setSelected("true".equals(value));
+					isSelected = "true".equals(value);
 				} else if (value instanceof Character) {
-					checkBox.setSelected(Character.valueOf('t').equals(value));
+					isSelected = Character.valueOf('t').equals(value);
 				}
+				
+				checkBox.setSelected(isSelected);
 			}
 
+			@Override
 			public Object getCellEditorValue() {
 				return Boolean.valueOf(checkBox.isSelected());
 			}
 		};
-		
+
 		checkBox.addActionListener(delegate);
+		checkBox.setRequestFocusEnabled(false);
 	}
 
 }

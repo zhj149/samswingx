@@ -21,7 +21,7 @@ import javax.swing.JTree;
 import javax.swing.table.TableCellEditor;
 import javax.swing.tree.TreeCellEditor;
 
-import org.sam.swing.table.view.JSHibernateTableColumnMappingAbstract;
+import org.sam.swing.table.view.JSTableColumnMappingAbstract;
 
 public class JSTableDialogEditor extends AbstractCellEditor
 	implements TableCellEditor, TreeCellEditor  {
@@ -73,13 +73,13 @@ public class JSTableDialogEditor extends AbstractCellEditor
 	/**
 	 * 表的映射关系
 	 */
-	private JSHibernateTableColumnMappingAbstract mapping;
+	private JSTableColumnMappingAbstract mapping;
 	
 	/**
 	 * 表的映射关系
 	 * @return
 	 */
-	public JSHibernateTableColumnMappingAbstract getMapping() {
+	public JSTableColumnMappingAbstract getMapping() {
 		return mapping;
 	}
 
@@ -87,7 +87,7 @@ public class JSTableDialogEditor extends AbstractCellEditor
 	 * 实体的映射关系
 	 * @param mapping
 	 */
-	public void setMapping(JSHibernateTableColumnMappingAbstract mapping) {
+	public void setMapping(JSTableColumnMappingAbstract mapping) {
 		this.mapping = mapping;
 	}
 
@@ -132,7 +132,7 @@ public class JSTableDialogEditor extends AbstractCellEditor
 	/**
 	 * 双击编辑
 	 */
-	public JSTableDialogEditor(JSHibernateTableColumnMappingAbstract colMapping , String fieldName)
+	public JSTableDialogEditor(JSTableColumnMappingAbstract colMapping , String fieldName)
 	{
 		super();
 		label = new JLabel();

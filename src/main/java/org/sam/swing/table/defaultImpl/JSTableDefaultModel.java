@@ -67,7 +67,7 @@ public class JSTableDefaultModel<E extends Object> extends JSTableModel<List<E>>
 	public JSTableModelLinster<List<E>> getTableModelLinster() {
 
 		if (super.getTableModelLinster() == null)
-			this.setTableModelLinster(new JSTableModelDefaultLinster<E>(this));
+			this.setTableModelLinster(new JSTableModelDefaultAdapter<E>(this));
 		return super.getTableModelLinster();
 	}
 
@@ -328,14 +328,14 @@ public class JSTableDefaultModel<E extends Object> extends JSTableModel<List<E>>
 				String colName = this.getColumnName(e.getColumn());
 				if (colName == null || colName.length() <= 0)
 					return;
-
-				Field field = entity.getClass().getDeclaredField(colName);
+				
+				Field field = getCls().getDeclaredField(colName);
 				field.setAccessible(true);
 				JSTableColumn[] columns = this.getTableColumns();
 				int iFind = this.findColumn(colName);
 				JSTableColumn curColumn = columns[iFind];
 				field.set(entity, this.getTableModelLinster().getDataTranstor(curColumn,
-						this.getValueAt(e.getFirstRow(), e.getColumn()), field.getDeclaringClass()));
+						this.getValueAt(e.getFirstRow(), e.getColumn()), field.getType()));
 
 				if (this.creates.contains(entity)) // 如果新增行包含数据
 				{
@@ -377,11 +377,10 @@ public class JSTableDefaultModel<E extends Object> extends JSTableModel<List<E>>
 			}
 
 			if (orginal != null && !orginal.isEmpty()) {
-				// 数据集合
-				Object[] datas = new Object[getColumnCount()];
-
 				for (Object entity : orginal) {
 					// 假设已经生成完成了列的映射，然后根据列绑定的次序我们插入数据
+					// 数据集合
+					Object[] datas = new Object[getColumnCount()];
 					for (int i = 0; i < getColumnCount(); i++) {
 						String colName = getColumnName(i);
 						if (JSTableColumn.COLUMN_ORIGINAL.equals(colName)) {
@@ -396,7 +395,6 @@ public class JSTableDefaultModel<E extends Object> extends JSTableModel<List<E>>
 							}
 						}
 					}
-
 					addRow(datas);
 				}
 

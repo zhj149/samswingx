@@ -72,13 +72,16 @@ public class JSRadioButtonGroup<V, T> extends JPanel {
 			add(entry);
 		}
 	}
-	
+
 	/**
 	 * 默认的选中对象
-	 * @param radioValues 数据列表
-	 * @param selectValue 选中的数据
+	 * 
+	 * @param radioValues
+	 *            数据列表
+	 * @param selectValue
+	 *            选中的数据
 	 */
-	public JSRadioButtonGroup(Map<V, T> radioValues , V selectValue) {
+	public JSRadioButtonGroup(Map<V, T> radioValues, V selectValue) {
 		this();
 		for (Entry<V, T> entry : radioValues.entrySet()) {
 			add(entry);
@@ -162,7 +165,7 @@ public class JSRadioButtonGroup<V, T> extends JPanel {
 		if (actionHandler == null) {
 			actionHandler = new ActionSelectionListener();
 		}
-		button.setBackground(null); //设置了这个属性，背景色就会变成透明，不解
+		button.setBackground(null); // 设置了这个属性，背景色就会变成透明，不解
 		button.addActionListener(actionHandler);
 		button.addItemListener(actionHandler);
 	}
@@ -258,12 +261,13 @@ public class JSRadioButtonGroup<V, T> extends JPanel {
 	 *            the value to select
 	 */
 	public void setSelectedValue(V value) {
-		
+
 		AbstractButton[] buttons = getButtonComponents();
 		for (AbstractButton button : buttons) {
 			if (button instanceof JSRadioButton) {
 				JSRadioButton b = (JSRadioButton) button;
-				if (value == b.getTag() || value.equals(b.getTag()))
+				if ((value == null && b.getTag() == null)
+						|| (value != null && (value == b.getTag() || value.equals(b.getTag()))))
 					button.setSelected(true);
 			} else {
 				if (button.getText().equals(value))
@@ -285,7 +289,7 @@ public class JSRadioButtonGroup<V, T> extends JPanel {
 	 */
 	public AbstractButton getChildButton(V value) {
 		T t = values.get(value);
-		
+
 		AbstractButton[] buttons = getButtonComponents();
 		for (AbstractButton button : buttons) {
 			if (button.getText().equals(t))

@@ -1,34 +1,70 @@
-package org.sam.swing.table;
+package org.sam.swing.table.defaultImpl;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.List;
+
+import org.sam.swing.table.JSTableColumn;
+import org.sam.swing.table.JSTableModel;
+import org.sam.swing.table.JSTableModelEvent;
+import org.sam.swing.table.JSTableModelLinster;
 
 /**
- * modellinster的一个空实现
- * 
+ * 默认的系统实现
  * @author sam
  *
  * @param <E>
  */
-public abstract class JSTableModelAdapter<E> implements JSTableModelLinster<E> {
+public class JSTableModelDefaultAdapter<E> implements JSTableModelLinster<List<E>> {
+	
+	/**
+	 * 当前的tablemodel对象
+	 */
+	private JSTableModel<List<E>> tableModel;
+	
+	/**
+	 * 当前的tablemodel
+	 * @return
+	 */
+	public JSTableModel<List<E>> getTableModel() {
+		return tableModel;
+	}
+
+	/**
+	 * 当前的操作tabelmodel对象
+	 * @param tableModel
+	 */
+	public void setTableModel(JSTableModel<List<E>> tableModel) {
+		this.tableModel = tableModel;
+	}
+
+	/**
+	 * 带有构造函数的tableModel
+	 * @param tableModel
+	 */
+	public JSTableModelDefaultAdapter(JSTableModel<List<E>> tableModel)
+	{
+		super();
+		this.setTableModel(tableModel);
+	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void beforRetrieve(JSTableModelEvent event) throws Exception {
-
+		tableModel.clear();
 	}
 
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public E onRetrieve() throws Exception {
+	public List<E> onRetrieve() throws Exception {
 		return null;
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -41,7 +77,14 @@ public abstract class JSTableModelAdapter<E> implements JSTableModelLinster<E> {
 	 */
 	@Override
 	public void beforeUpdate(JSTableModelEvent event) throws Exception {
-
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean update(JSTableModelEvent event) throws Exception {
+		return true;
 	}
 
 	/**
@@ -49,6 +92,7 @@ public abstract class JSTableModelAdapter<E> implements JSTableModelLinster<E> {
 	 */
 	@Override
 	public void atfterUpdate(JSTableModelEvent event) throws Exception {
+		tableModel.resetUpdate();
 	}
 
 	/**
@@ -57,13 +101,13 @@ public abstract class JSTableModelAdapter<E> implements JSTableModelLinster<E> {
 	@Override
 	public void beforDelete(JSTableModelEvent event) throws Exception {
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
 	public void afterDelete(JSTableModelEvent event) throws Exception {
-
+		
 	}
 
 	/**
@@ -93,15 +137,7 @@ public abstract class JSTableModelAdapter<E> implements JSTableModelLinster<E> {
 	@Override
 	public void aftterInsert(JSTableModelEvent event) throws Exception {
 	}
-
-	/**
-	 * {@inheritDoc}
-	 */
-	@Override
-	public boolean update(JSTableModelEvent event) throws Exception {
-		return true;
-	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 * @throws ParseException 
@@ -141,7 +177,12 @@ public abstract class JSTableModelAdapter<E> implements JSTableModelLinster<E> {
 			if (value.toString().trim().length() <= 0) {
 				return col.getCanBeNull() ? null : 0l;
 			} else {
-				return Long.parseLong(value.toString());
+				if (value.toString().equals("true"))
+					return 1L;
+				else if (value.toString().equals("false"))
+					return 0L;
+				else 
+					return Long.parseLong(value.toString());
 			}
 		} else if (targetCls.equals(Character.class)) {
 			if (value.toString().trim().length() <= 0) {
@@ -177,4 +218,5 @@ public abstract class JSTableModelAdapter<E> implements JSTableModelLinster<E> {
 			return value;
 		}
 	}
+
 }

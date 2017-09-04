@@ -28,8 +28,8 @@ import org.sam.swing.table.JSTableColumn;
 import org.sam.swing.table.JSTableColumnModel;
 import org.sam.swing.table.JSTableModel;
 import org.sam.swing.table.defaultImpl.JSTableDefaultBuilderImpl;
-import org.sam.swing.table.view.JSHibernateTableColumnMappingAbstract;
 import org.sam.swing.table.view.JSTableColumnMapping;
+import org.sam.swing.table.view.JSTableColumnMappingAbstract;
 
 /**
  * 单行数据选择对象
@@ -71,7 +71,7 @@ public class JSTableSingleSelectionDialog extends JSDialog implements ActionList
 	/**
 	 * 当前的列定义列表
 	 */
-	private JSHibernateTableColumnMappingAbstract colMapping;
+	private JSTableColumnMappingAbstract colMapping;
 	
 	/**
 	 * 当前的表格模型对象
@@ -163,7 +163,7 @@ public class JSTableSingleSelectionDialog extends JSDialog implements ActionList
 	 * 当前的列定义列表
 	 * @param colMapping
 	 */
-	public void setColMapping(JSHibernateTableColumnMappingAbstract colMapping) {
+	public void setColMapping(JSTableColumnMappingAbstract colMapping) {
 		if (this.colMapping != colMapping)
 		{
 			this.colMapping = colMapping;
@@ -183,7 +183,7 @@ public class JSTableSingleSelectionDialog extends JSDialog implements ActionList
 	/**
 	 * 单行数据选择对象
 	 */
-	public JSTableSingleSelectionDialog(JSHibernateTableColumnMappingAbstract colMapping) {
+	public JSTableSingleSelectionDialog(JSTableColumnMappingAbstract colMapping) {
 		/**
 		 * 创建无父容器的模态窗口
 		 */

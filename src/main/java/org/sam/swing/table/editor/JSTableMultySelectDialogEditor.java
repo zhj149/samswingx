@@ -19,7 +19,7 @@ import javax.swing.JTree;
 import javax.swing.table.TableCellEditor;
 import javax.swing.tree.TreeCellEditor;
 
-import org.sam.swing.table.view.JSHibernateTableColumnMappingAbstract;
+import org.sam.swing.table.view.JSTableColumnMappingAbstract;
 
 public class JSTableMultySelectDialogEditor extends AbstractCellEditor implements TableCellEditor, TreeCellEditor {
 
@@ -89,14 +89,14 @@ public class JSTableMultySelectDialogEditor extends AbstractCellEditor implement
 	/**
 	 * 表的映射关系
 	 */
-	private JSHibernateTableColumnMappingAbstract mapping;
+	private JSTableColumnMappingAbstract mapping;
 
 	/**
 	 * 表的映射关系
 	 * 
 	 * @return
 	 */
-	public JSHibernateTableColumnMappingAbstract getMapping() {
+	public JSTableColumnMappingAbstract getMapping() {
 		return mapping;
 	}
 
@@ -105,7 +105,7 @@ public class JSTableMultySelectDialogEditor extends AbstractCellEditor implement
 	 * 
 	 * @param mapping
 	 */
-	public void setMapping(JSHibernateTableColumnMappingAbstract mapping) {
+	public void setMapping(JSTableColumnMappingAbstract mapping) {
 		this.mapping = mapping;
 	}
 
@@ -150,7 +150,7 @@ public class JSTableMultySelectDialogEditor extends AbstractCellEditor implement
 	 * @param colMapping
 	 * @param fieldName
 	 */
-	public JSTableMultySelectDialogEditor(JSHibernateTableColumnMappingAbstract colMapping, String fieldName) {
+	public JSTableMultySelectDialogEditor(JSTableColumnMappingAbstract colMapping, String fieldName) {
 		this(colMapping, null, fieldName);
 
 	}
@@ -162,7 +162,7 @@ public class JSTableMultySelectDialogEditor extends AbstractCellEditor implement
 	 * @param delegate
 	 * @param fieldName
 	 */
-	public JSTableMultySelectDialogEditor(JSHibernateTableColumnMappingAbstract colMapping,
+	public JSTableMultySelectDialogEditor(JSTableColumnMappingAbstract colMapping,
 			JSEditorDelegateAdapter delegate, String fieldName) {
 		super();
 		label = new JLabel();
