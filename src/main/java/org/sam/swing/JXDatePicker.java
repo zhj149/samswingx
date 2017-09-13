@@ -838,7 +838,8 @@ public class JXDatePicker extends JComponent {
 	     * Pes: added setLocale method to refresh link text on locale changes
 	     */
 	    private final class TodayPanel extends JXPanel {
-	        private TodayAction todayAction;
+			private static final long serialVersionUID = 597934145124572315L;
+			private TodayAction todayAction;
 	        private JXHyperlink todayLink;
 
 	        TodayPanel() {
@@ -890,7 +891,8 @@ public class JXDatePicker extends JComponent {
 	        }
 	        
 	        private final class TodayAction extends AbstractAction {
-	            boolean select;
+				private static final long serialVersionUID = -8334815278756992748L;
+				boolean select;
 	            TodayAction() {
 	                super(getLinkFormat().format(new Object[]{getLinkDay()}));
 	                Calendar cal = _monthView.getCalendar();

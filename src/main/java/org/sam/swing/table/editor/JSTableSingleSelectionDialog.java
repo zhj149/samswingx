@@ -304,7 +304,8 @@ public class JSTableSingleSelectionDialog extends JSDialog implements ActionList
 						for (int i = 0; i < progressBar.getMaximum() ;i++)
 						{
 							progressBar.setValue(i);
-							Thread.currentThread().sleep(100);
+							Thread.currentThread();
+							Thread.sleep(100);
 						}
 						return null;
 					}

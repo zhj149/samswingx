@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 
@@ -218,8 +219,12 @@ public class JSTable extends JXTable implements KeyListener {
 		this.setColumnControlVisible(true);
 		this.setShowGrid(true, true);
 		this.addHighlighter(HighlighterFactory.createSimpleStriping(Color.LIGHT_GRAY));
-		DefaultTableCellRenderer renderer = (DefaultTableCellRenderer)this.getTableHeader().getDefaultRenderer();
-		renderer.setHorizontalAlignment(JLabel.CENTER);
+
+		TableCellRenderer headerRenerder = this.getTableHeader().getDefaultRenderer();
+		if (headerRenerder instanceof DefaultTableCellRenderer) {
+			DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) headerRenerder;
+			renderer.setHorizontalAlignment(JLabel.CENTER);
+		}
 
 		if (this.getModel() instanceof JSTableModel) {
 			JSTableModel<?> module = (JSTableModel<?>) this.getModel();
@@ -240,7 +245,7 @@ public class JSTable extends JXTable implements KeyListener {
 	public void moveRow(int srcRow, int tarRow) throws Exception {
 		if (srcRow < 0 || srcRow >= this.getRowCount())
 			throw new Exception("sourceRow over index");
-		
+
 		if (tarRow < 0 || tarRow >= this.getRowCount())
 			throw new Exception("targetRow over index");
 
@@ -308,7 +313,7 @@ public class JSTable extends JXTable implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 
 	}
-	
+
 	/**
 	 * 根据单元格的位置，设置数据
 	 * 
@@ -320,12 +325,12 @@ public class JSTable extends JXTable implements KeyListener {
 	 *            文本数据
 	 */
 	public void setValue(int row, int column, String value) throws Exception {
-		
+
 		Object orginal = this.getValueAt(row, column);
 		if (value == null || orginal == null) {
 			return;
 		}
-		
+
 		Class<?> colType = orginal.getClass();
 		if (colType.equals(Integer.class)) {
 			if (value.trim().length() <= 0) {

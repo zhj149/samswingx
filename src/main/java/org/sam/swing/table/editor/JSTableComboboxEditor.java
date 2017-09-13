@@ -2,12 +2,11 @@ package org.sam.swing.table.editor;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
-import java.awt.event.MouseEvent;
-import java.io.Serializable;
 import java.util.EventObject;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Vector;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.JCheckBox;
@@ -36,6 +35,37 @@ public class JSTableComboboxEditor<T, V> extends AbstractCellEditor implements T
 		if (items == null || datas == null || items.length != datas.length)
 			throw new IllegalArgumentException();
 		this.editorComponent = new JSComboBox<>(items, datas);
+		delegate = new EditorDelegate() {
+			private static final long serialVersionUID = 4156243708866105666L;
+
+			@Override
+			public void setValue(Object value) {
+				super.setValue(value);
+			}
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public Object getCellEditorValue() {
+				return ((JSComboBox<T,V>) editorComponent).getSelectedValue();
+			}
+		};
+		delegate.setClickCountToStart(1);
+	}
+	
+	public JSTableComboboxEditor (Map<T,V> map) {
+		
+		if (map == null || map.size() <= 0)
+			throw new IllegalArgumentException();
+		
+		Vector<T> items = new Vector<>();
+		Vector<V> datas = new Vector<>();
+		
+		for(Entry<T,V> entry : map.entrySet()){
+			items.add(entry.getKey());
+			datas.add(entry.getValue());
+		}
+		
+		this.editorComponent = new JSComboBox<>(datas,items);
 		delegate = new EditorDelegate() {
 			private static final long serialVersionUID = 4156243708866105666L;
 
@@ -90,6 +120,7 @@ public class JSTableComboboxEditor<T, V> extends AbstractCellEditor implements T
 		return editorComponent;
 	}
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 		delegate.setValue(value);
 		if (editorComponent instanceof JCheckBox) {

@@ -1,7 +1,5 @@
 package org.sam.swing;
 
-import java.awt.Color;
-
 import javax.swing.JComboBox;
 
 /**
