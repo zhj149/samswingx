@@ -46,5 +46,23 @@
 			<artifactId>commons-pool</artifactId>
 			<version>1.6</version>
 		</dependency>
+		<!-- weblaf start -->
+		<dependency>
+			<groupId>com.weblookandfeel</groupId>
+			<artifactId>weblaf-core</artifactId>
+			<version>1.2.8</version>
+		</dependency>
+		<dependency>
+			<groupId>com.weblookandfeel</groupId>
+			<artifactId>weblaf-ui</artifactId>
+			<version>1.2.8</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/net.sf.doolin/javadocking -->
+		<dependency>
+			<groupId>net.sf.doolin</groupId>
+			<artifactId>javadocking</artifactId>
+			<version>1.4.2</version>
+		</dependency>
+		<!-- weblaf end -->
 	</dependencies>
 </project>
