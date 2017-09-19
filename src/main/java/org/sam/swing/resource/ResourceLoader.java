@@ -19,232 +19,232 @@ public class ResourceLoader
 	/**
 	 * 工具栏图标
 	 */
-	public static final String IMAGE_STATIC = "org/sam/swing/resource/iconfont-stack2.png";
+	public static final String IMAGE_STATIC = "iconfont-stack2.png";
 	
 	/**
 	 * 监视器图标
 	 */
-	public static final String IMAGE_MONITOR = "org/sam/swing/resource/iconfont-monitor.png";
+	public static final String IMAGE_MONITOR = "iconfont-monitor.png";
 	
 	/**
 	 * 播放图标
 	 */
-	public static final String IMAGE_PLAY = "org/sam/swing/resource/Play16x16.png";
+	public static final String IMAGE_PLAY = "Play16x16.png";
 	
 	/**
 	 * 暂停图标
 	 */
-	public static final String IMAGE_PAUSE = "org/sam/swing/resource/Pause16x16.png";
+	public static final String IMAGE_PAUSE = "Pause16x16.png";
 	
 	/**
 	 * 停止按钮
 	 */
-	public static final String IMAGE_STOP = "org/sam/swing/resource/Stop16x16.png";
+	public static final String IMAGE_STOP = "Stop16x16.png";
 	
 	/**
 	 * 停止动画按钮
 	 */
-	public static final String IMAGE_STOP_PRESS = "org/sam/swing/resource/StopPress16x16.png";
+	public static final String IMAGE_STOP_PRESS = "StopPress16x16.png";
 	
 	/**
 	 * 开始仿真图标
 	 */
-	public static final String IMAGE_START_SIMULATOR = "org/sam/swing/resource/export.png";
+	public static final String IMAGE_START_SIMULATOR = "export.png";
 	
 	/**
 	 * 停止仿真图标
 	 */
-	public static final String IMAGE_STOP_SIMULATOR = "org/sam/swing/resource/exit.png";
+	public static final String IMAGE_STOP_SIMULATOR = "exit.png";
 	
 	/**
 	 * 打开功能树窗口图标
 	 */
-	public static final String IMAGE_OPEN_NAVIGATION = "org/sam/swing/resource/large_clipart.png";
+	public static final String IMAGE_OPEN_NAVIGATION = "large_clipart.png";
 	
 	/**
 	 * 打开仿真窗口图标
 	 */
-	public static final String IMAGE_OPEN_SIMULATOR = "org/sam/swing/resource/Nitrogen.png";
+	public static final String IMAGE_OPEN_SIMULATOR = "Nitrogen.png";
 	
 	/**
 	 * 打开图层窗口图标
 	 */
-	public static final String IMAGE_OPEN_LAYER = "org/sam/swing/resource/add.png";
+	public static final String IMAGE_OPEN_LAYER = "add.png";
 	
 	/**
 	 * 打开日志窗口图标
 	 */
-	public static final String IMAGE_OPEN_LOG = "org/sam/swing/resource/filter.png";
+	public static final String IMAGE_OPEN_LOG = "filter.png";
 	
 	/**
 	 * 打开图层窗口图标
 	 */
-	public static final String IMAGE_RETRIEVE = "org/sam/swing/resource/filter.png";
+	public static final String IMAGE_RETRIEVE = "filter.png";
 	
 	/**
 	 * 新增操作按钮
 	 */
-	public static final String IMAGE_NEW = "org/sam/swing/resource/new.png";
+	public static final String IMAGE_NEW = "new.png";
 	
 	/**
 	 * 新增操作按钮
 	 */
-	public static final String IMAGE_ADD_SMALL = "org/sam/swing/resource/edit_add.png";
+	public static final String IMAGE_ADD_SMALL = "edit_add.png";
 	
 	/**
 	 * 移除操作小图片
 	 */
-	public static final String IMAGE_DEL_SMALL = "org/sam/swing/resource/edit_remove.png";
+	public static final String IMAGE_DEL_SMALL = "edit_remove.png";
 	
 	/**
 	 * 移除操作小图片
 	 */
-	public static final String IMAGE_INSERT_SMALL = "org/sam/swing/resource/insert.png";
+	public static final String IMAGE_INSERT_SMALL = "insert.png";
 	
 	/**
 	 * 修改按钮
 	 */
-	public static final String IMAGE_MODIFY = "org/sam/swing/resource/modify.png";
+	public static final String IMAGE_MODIFY = "modify.png";
 	
 	/**
 	 * 删除按钮
 	 */
-	public static final String IMAGE_DELETE = "org/sam/swing/resource/delete.png";
+	public static final String IMAGE_DELETE = "delete.png";
 	
 	/**
 	 * 保存按钮
 	 */
-	public static final String IMAGE_SAVE = "org/sam/swing/resource/save.png";
+	public static final String IMAGE_SAVE = "save.png";
 	
 	/**
 	 * 导入图片
 	 */
-	public static final String IMAGE_IMPORT = "org/sam/swing/resource/large_smartart.png";
+	public static final String IMAGE_IMPORT = "large_smartart.png";
 	
 	/**
 	 * 导出图片
 	 */
-	public static final String IMAGE_EXPORT = "org/sam/swing/resource/large_shapes.png";
+	public static final String IMAGE_EXPORT = "large_shapes.png";
 	
 	/**
 	 * 上移图片
 	 */
-	public static final String IMAGE_UP = "org/sam/swing/resource/upenable.png";
+	public static final String IMAGE_UP = "upenable.png";
 	
 	/**
 	 * 下移图片
 	 */
-	public static final String IMAGE_DOWN = "org/sam/swing/resource/downenable.png";
+	public static final String IMAGE_DOWN = "downenable.png";
 	
 	/**
 	 * 查询图片
 	 */
-	public static final String IMAGE_FIND = "org/sam/swing/resource/find.png";
+	public static final String IMAGE_FIND = "find.png";
 	
 	/**
 	 * 程序的logo
 	 */
-	public static final String IMAGE_LOGO = "org/sam/swing/resource/logo.png";
+	public static final String IMAGE_LOGO = "logo.png";
 	
 	/**
 	 * 打开shp图层的操作
 	 */
-	public static final String IMAGE_GEO_OPEN_SHP = "org/sam/swing/resource/OpenLayer.png";
+	public static final String IMAGE_GEO_OPEN_SHP = "OpenLayer.png";
 	
 	/**
 	 * 连接到数据库的图标
 	 */
-	public static final String IMAGE_GEO_CONNECT_DB = "org/sam/swing/resource/connectdb.png";
+	public static final String IMAGE_GEO_CONNECT_DB = "connectdb.png";
 	
 	/**
 	 * 选中图元对象的图标
 	 */
-	public static final String IMAGE_GEO_SELECTOR = "org/sam/swing/resource/selectgeo.png";
+	public static final String IMAGE_GEO_SELECTOR = "selectgeo.png";
 	
 	/**
 	 * 图层数据集合
 	 */
-	public static final String IMAGE_GEO_DATASTORE = "org/sam/swing/resource/datastore.png";
+	public static final String IMAGE_GEO_DATASTORE = "datastore.png";
 	
 	/**
 	 * 选中数据集合
 	 */
-	public static final String IMAGE_GEO_SELECTDATASTORE = "org/sam/swing/resource/selecteddatastore.png";
+	public static final String IMAGE_GEO_SELECTDATASTORE = "selecteddatastore.png";
 	
 	/**
 	 * 新增点的图片
 	 */
-	public static final String IMAGE_POINT_ADD = "org/sam/swing/resource/point.png";
+	public static final String IMAGE_POINT_ADD = "point.png";
 	
 	/**
 	 * 线条的图片
 	 */
-	public static final String IMAGE_LINE = "org/sam/swing/resource/line.png";
+	public static final String IMAGE_LINE = "line.png";
 	
 	/**
 	 * 多边形的图片
 	 */
-	public static final String IMAGE_POLYGON = "org/sam/swing/resource/polygon.png";
+	public static final String IMAGE_POLYGON = "polygon.png";
 	
 	/**
 	 * 开始编辑的图片
 	 */
-	public static final String IMAGE_EDIT_BEGIN = "org/sam/swing/resource/geoedit.png";
+	public static final String IMAGE_EDIT_BEGIN = "geoedit.png";
 	
 	/**
 	 * 结束编辑的图片
 	 */
-	public static final String IMAGE_EDIT_END = "org/sam/swing/resource/geosave.png"; 
+	public static final String IMAGE_EDIT_END = "geosave.png"; 
 	
 	/**
 	 * 选择地理信息对象图片
 	 */
-	public static final String IMAGE_GEO_SELECT = "org/sam/swing/resource/selectgeo.png";
+	public static final String IMAGE_GEO_SELECT = "selectgeo.png";
 	/**
 	 * 简单选择对象
 	 */
-	public static final String IMAGE_GEO_SIMPLE_SELECT = "org/sam/swing/resource/pointer.png";
+	public static final String IMAGE_GEO_SIMPLE_SELECT = "pointer.png";
 	/**
 	 * 移除点的图片
 	 */
-	public static final String IMAGE_GEO_REMOVE = "org/sam/swing/resource/removegeo.png";
+	public static final String IMAGE_GEO_REMOVE = "removegeo.png";
 	/**
 	 * 编辑物理跑道图标
 	 */
-	public static final String IMAGE_ADD_RUNWAY = "org/sam/swing/resource/runway.png";
+	public static final String IMAGE_ADD_RUNWAY = "runway.png";
 	/**
 	 * 编辑逻辑跑道图标
 	 */
-	public static final String IMAGE_ADD_RUNWAY_LOGIC = "org/sam/swing/resource/runwayLogic.png";
+	public static final String IMAGE_ADD_RUNWAY_LOGIC = "runwayLogic.png";
 	/**
 	 * 地面点
 	 */
-	public static final String IMAGE_ADD_GROUND_POINT = "org/sam/swing/resource/groundPoint.png";
+	public static final String IMAGE_ADD_GROUND_POINT = "groundPoint.png";
 	
 	/**
 	 * 滑行道编辑按钮
 	 */
-	public static final String IMAGE_ADD_TAXIWAY = "org/sam/swing/resource/taxiway.png";
+	public static final String IMAGE_ADD_TAXIWAY = "taxiway.png";
 	
 	/**
 	 * 延长线功能
 	 */
-	public static final String IMAGE_GEO_EXTENSION_LINE = "org/sam/swing/resource/extension-line.png";
+	public static final String IMAGE_GEO_EXTENSION_LINE = "extension-line.png";
 	
 	/**
 	 * 停机位编辑按钮
 	 */
-	public static final String IMAGE_ADD_PARKINGPOINT = "org/sam/swing/resource/parkingPoint.png";
+	public static final String IMAGE_ADD_PARKINGPOINT = "parkingPoint.png";
 			
 	/**
 	 * 跑道入口编辑按钮
 	 */
-	public static final String IMAGE_ADD_RUNWAYENTRY = "org/sam/swing/resource/runwayEntry.png";
+	public static final String IMAGE_ADD_RUNWAYENTRY = "runwayEntry.png";
 	
 	/**
 	 * 跑道出口编辑按钮
 	 */
-	public static final String IMAGE_ADD_RUNWAYEXIT = "org/sam/swing/resource/runwayExit.png";
+	public static final String IMAGE_ADD_RUNWAYEXIT = "runwayExit.png";
 	
 	//end
 	
