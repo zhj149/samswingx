@@ -19,6 +19,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.sam.swing.resource.ResourceLoader;
+
 import com.javadocking.DockingManager;
 import com.javadocking.dock.SingleDock;
 import com.javadocking.dockable.ActionDockable;
@@ -55,14 +57,14 @@ public class ActionsDockable extends JPanel {
 			TextPanel textPanel = new TextPanel("I am window 1.");
 
 			// Create the dockable around the content component.
-			Dockable dockable = new DefaultDockable("Window1", textPanel, "Window", new ImageIcon(getClass().getResource("/org/sam/swing/resource/iconfont-stack2.png")));
+			Dockable dockable = new DefaultDockable("Window1", textPanel, "Window", new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_OPEN_LAYER)));
 
 			// Decorate the dockable with a close action.		
 			dockable = new StateActionDockable(dockable, new DefaultDockableStateActionFactory(), DockableState.statesClosed());
 			
 			// Decorate the dockable other actions.
-			MessageAction helloAction = new MessageAction(this, "Hello", new ImageIcon(getClass().getResource("/org/sam/swing/resource/iconfont-stack2.png")), "Hello world!");
-			MessageAction cautionAction = new MessageAction(this, "Caution", new ImageIcon(getClass().getResource("/org/sam/swing/resource/iconfont-stack2.png")), "Be Careful!");
+			MessageAction helloAction = new MessageAction(this, "Hello", new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_OPEN_LAYER)), "Hello world!");
+			MessageAction cautionAction = new MessageAction(this, "Caution", new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_OPEN_LAYER)), "Be Careful!");
 			Action[][] actions = new Action[1][];
 			actions[0] = new Action[2];
 			actions[0][0] = helloAction;

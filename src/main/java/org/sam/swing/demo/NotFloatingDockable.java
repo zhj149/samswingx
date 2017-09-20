@@ -15,6 +15,8 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.SwingUtilities;
 
+import org.sam.swing.resource.ResourceLoader;
+
 import com.javadocking.DockingManager;
 import com.javadocking.dock.Position;
 import com.javadocking.dock.TabDock;
@@ -55,7 +57,7 @@ public class NotFloatingDockable extends JPanel {
 			int dockingModes = DockingMode.ALL - DockingMode.FLOAT;
 			
 			// Create the dockables around the content components.
-			Icon icon = new ImageIcon(getClass().getResource("/org/sam/swing/resource/iconfont-stack2.png"));
+			Icon icon = new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_OPEN_LAYER));
 			Dockable dockable1 = new DefaultDockable("Window1", textPanel1, "Window 1", icon, dockingModes);
 			Dockable dockable2 = new DefaultDockable("Window2", textPanel2, "Window 2", icon, dockingModes);
 			Dockable dockable3 = new DefaultDockable("Window3", textPanel3, "Window 3", icon, dockingModes);

@@ -14,6 +14,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.sam.swing.resource.ResourceLoader;
+
 import com.javadocking.DockingManager;
 import com.javadocking.dock.SingleDock;
 import com.javadocking.dockable.DefaultDockable;
@@ -45,7 +47,7 @@ public class IconDockable extends JPanel {
 		TextPanel textPanel = new TextPanel("I am window 1.");
 
 		// Create the dockable around the content component.
-		Icon icon = new ImageIcon(getClass().getResource("/org/sam/swing/resource/iconfont-stack2.png"));
+		Icon icon = new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_OPEN_LAYER));
 		DefaultDockable dockable = new DefaultDockable("Window1", textPanel, "Window", icon);
 		dockable.setDescription("Window with text");
 		
