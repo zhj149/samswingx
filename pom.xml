@@ -4,7 +4,7 @@
 
 	<groupId>org.sam</groupId>
 	<artifactId>swing</artifactId>
-	<version>0.1.0</version>
+	<version>0.1.0-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>swing</name>
@@ -15,6 +15,7 @@
 	</properties>
 
 	<build>
+		<finalName>swing</finalName>
 		<plugins>
 			<!-- 编译源码的插件，不配置install时容易报错：source 1.5 中不支持 diamond 运算符 -->
 			<plugin>
@@ -26,8 +27,22 @@
 					<target>1.8</target>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<version>2.8.2</version>
+			</plugin>
 		</plugins>
 	</build>
+	
+		<!-- deploy 的配置 -->
+	<distributionManagement>
+		<repository>
+			<id>sim-snap</id>
+			<name>sim-snap</name>
+			<url>http://192.168.241.165:8082/nexus/content/repositories/sim-snap/</url>
+		</repository>
+	</distributionManagement>
 
 	<dependencies>
 		<dependency>
@@ -51,6 +66,7 @@
 			<groupId>net.sf.doolin</groupId>
 			<artifactId>javadocking</artifactId>
 			<version>1.4.2</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 </project>

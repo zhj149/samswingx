@@ -1,4 +1,4 @@
-package org.sam.swing.demo;
+package org.sam.swing;
 
 /**
  * 部门实体

@@ -1,4 +1,4 @@
-package org.sam.swing.demo;
+package org.sam.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -37,11 +37,13 @@ import org.sam.swing.table.defaultImpl.JSTableModelDefaultAdapter;
 import org.sam.swing.table.editor.JSTableCheckboxEditor;
 import org.sam.swing.table.editor.JSTableColorEditor;
 import org.sam.swing.table.editor.JSTableFontEditor;
+import org.sam.swing.table.editor.JSTableImageButtonEditor;
 import org.sam.swing.table.editor.JSTableRadioButtonGroupEditor;
 import org.sam.swing.table.editor.JSTableSpinnerEditor;
 import org.sam.swing.table.renderer.JSTableCheckboxRenderer;
 import org.sam.swing.table.renderer.JSTableColorRenderer;
 import org.sam.swing.table.renderer.JSTableFormatRenderer;
+import org.sam.swing.table.renderer.JSTableImageButtonRenderer;
 import org.sam.swing.table.renderer.JSTableRadioButtonGroupRenderer;
 import org.sam.swing.table.renderer.JSTableRowNumberRenderer;
 
@@ -219,10 +221,31 @@ public class JFrameDefaultTableDemo extends JFrame {
 		col9.setMaxWidth(125);
 		col9.setDefaultValue("");
 		col9.setCellEditor(new JSTableFontEditor());
+		
+		JSTableColumn col10 = new JSTableColumn();
+		col10.setIdentifier("");
+		col10.setTitle("图片按钮");
+		col10.setHeaderValue("图片按钮");
+		col10.setModelIndex(10);
+		col10.setWidth(35);
+		col10.setMaxWidth(35);
+		col10.setDefaultValue(null);
+		JButton btn = new JButton(new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_EXPORT)));
+		col10.setCellRenderer(new JSTableImageButtonRenderer(new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_EXPORT))));
+		col10.setCellEditor(new JSTableImageButtonEditor(btn));
+		btn.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = table.convertRowIndexToModel(table.getSelectedRow()) ;
+				int col = table.convertColumnIndexToModel(table.getSelectedColumn());
+				JOptionPane.showMessageDialog(null, "row:" + row + ";col:" + col + ";value:" + tableModel.getValueAt(row, col));
+			}
+		});
 
 		try {
 			JSTableBuilder<List<TestEntity>> builder = new JSTableDefaultBuilderImpl<>(TestEntity.class, col0, col1,
-					col2, col3, col4, col5, col6, col7, col8,col9);
+					col2, col3, col4, col5, col6, col7, col8,col9,col10);
 			colModel = builder.buildTableColumnModel();
 			tableModel = builder.buildTableModel();
 			table = new JSTable(tableModel, colModel);

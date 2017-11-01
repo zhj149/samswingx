@@ -337,11 +337,10 @@ public class JSTableDefaultModel<E extends Object> extends JSTableModel<List<E>>
 				field.set(entity, this.getTableModelLinster().getDataTranstor(curColumn,
 						this.getValueAt(e.getFirstRow(), e.getColumn()), field.getType()));
 
-				if (this.creates.contains(entity)) // 如果新增行包含数据
-				{
-
-				} else if (this.modifies.contains(entity)) // 如果是在更新组里的话
-				{
+				if (this.creates.contains(entity)) {
+					// 如果新增行包含数据
+				} else if (this.modifies.contains(entity)) {
+					// 如果是在更新组里的话
 				} else {
 					this.modifies.add((E) entity);
 				}

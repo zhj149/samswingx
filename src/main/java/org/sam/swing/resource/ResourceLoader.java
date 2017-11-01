@@ -157,6 +157,11 @@ public class ResourceLoader
 	public static final String IMAGE_GEO_CONNECT_DB = "connectdb.png";
 	
 	/**
+	 * 样式
+	 */
+	public static final String IMAGE_GEO_STYLE = "style.gif";
+	
+	/**
 	 * 选中图元对象的图标
 	 */
 	public static final String IMAGE_GEO_SELECTOR = "selectgeo.png";
