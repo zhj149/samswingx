@@ -34,8 +34,8 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-		<!-- deploy 的配置 -->
+
+	<!-- deploy 的配置 -->
 	<distributionManagement>
 		<repository>
 			<id>sim-snap</id>
@@ -55,11 +55,6 @@
 			<groupId>org.swinglabs.swingx</groupId>
 			<artifactId>swingx-all</artifactId>
 			<version>1.6.5-1</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-pool</groupId>
-			<artifactId>commons-pool</artifactId>
-			<version>1.6</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/net.sf.doolin/javadocking -->
 		<dependency>
