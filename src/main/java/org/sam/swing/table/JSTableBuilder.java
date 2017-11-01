@@ -5,7 +5,7 @@ package org.sam.swing.table;
  * @author sam
  *
  */
-public interface JSTableBuilder<E extends Object> {
+public interface JSTableBuilder<E> {
 	
 	/**
 	 * 构建columnModel

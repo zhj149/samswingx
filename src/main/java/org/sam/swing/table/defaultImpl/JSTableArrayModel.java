@@ -1,6 +1,5 @@
 package org.sam.swing.table.defaultImpl;
 
-import java.lang.reflect.Field;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,43 +18,37 @@ import org.sam.swing.table.JSTableModelLinster;
  * @param <E>
  *            实体类型
  */
-public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements TableModelListener {
+public class JSTableArrayModel extends JSTableModel<List<Object[]>> implements TableModelListener {
 
 	private static final long serialVersionUID = -7100624972070901341L;
 
 	/**
 	 * 原始的值
 	 */
-	private List<E> orginal;
+	private List<Object[]> orginal;
 
 	/**
 	 * 删除的对象集合
 	 */
-	private List<E> deletes = new LinkedList<>();
+	private List<Object[]> deletes = new LinkedList<>();
 
 	/**
 	 * 要更新的集合列表
 	 */
-	private List<E> modifies = new LinkedList<>();
+	private List<Object[]> modifies = new LinkedList<>();
 
 	/**
 	 * 需要创建的对象列表
 	 */
-	private List<E> creates = new LinkedList<>();
-
-	/**
-	 * 当前的泛型的类型
-	 */
-	private Class<E> cls;
+	private List<Object[]> creates = new LinkedList<>();
 
 	/**
 	 * 必须带有实体的构造类型，好变态
 	 * 
 	 * @param cls
 	 */
-	public JSTableDefaultModel(Class<E> cls) {
+	public JSTableArrayModel() {
 		super();
-		this.cls = cls;
 	}
 
 	/**
@@ -64,27 +57,18 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	 * @return
 	 */
 	@Override
-	public JSTableModelLinster<List<E>> getTableModelLinster() {
+	public JSTableModelLinster<List<Object[]>> getTableModelLinster() {
 
 		if (super.getTableModelLinster() == null)
-			this.setTableModelLinster(new JSTableModelDefaultAdapter<E>(this));
+			this.setTableModelLinster(new JSTableModelArrayAdapter(this));
 		return super.getTableModelLinster();
 	}
 
 	/**
-	 * 获取当前泛型的类型
-	 * 
-	 * @return
-	 */
-	public Class<E> getCls() {
-		return this.cls;
-	}
-
-	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> getOrginal() {
+	public List<Object[]> getOrginal() {
 		return orginal;
 	}
 
@@ -92,7 +76,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setOrginal(List<E> orginal) {
+	public void setOrginal(List<Object[]> orginal) {
 		this.orginal = orginal;
 	}
 
@@ -100,7 +84,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> getDeletes() {
+	public List<Object[]> getDeletes() {
 		return this.deletes;
 	}
 
@@ -108,7 +92,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setDeletes(List<E> deletes) {
+	public void setDeletes(List<Object[]> deletes) {
 		this.deletes = deletes;
 	}
 
@@ -116,7 +100,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> getCreates() {
+	public List<Object[]> getCreates() {
 		return this.creates;
 	}
 
@@ -124,7 +108,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setCreates(List<E> creates) {
+	public void setCreates(List<Object[]> creates) {
 		this.creates = creates;
 	}
 
@@ -132,7 +116,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> getModified() {
+	public List<Object[]> getModified() {
 		return this.modifies;
 	}
 
@@ -140,7 +124,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setModified(List<E> modified) {
+	public void setModified(List<Object[]> modified) {
 		this.modifies = modified;
 	}
 
@@ -190,18 +174,17 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public List<E> getDatas() throws Exception {
-		List<E> result = new LinkedList<>();
+	public List<Object[]> getDatas() throws Exception {
+		List<Object[]> result = new LinkedList<>();
 
 		int iOriginal = this.findColumn(JSTableColumn.COLUMN_ORIGINAL);
 		if (iOriginal < 0)
 			throw new Exception("Not include original data");
 
 		for (int i = 0; i < this.getRowCount(); i++) {
-			Object obj = this.getValueAt(i, iOriginal);
-			result.add((E) obj);
+			Object[] obj = (Object[]) this.getValueAt(i, iOriginal);
+			result.add(obj);
 		}
 
 		return result;
@@ -225,7 +208,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Object getData(int modelRow) throws Exception {
+	public Object[] getData(int modelRow) throws Exception {
 		int iOriginal = this.findColumn(JSTableColumn.COLUMN_ORIGINAL);
 		if (iOriginal < 0)
 			throw new Exception("Not include original data");
@@ -233,7 +216,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 		if (modelRow < 0 || modelRow >= this.getRowCount())
 			throw new Exception("modelRow over index");
 
-		return this.getValueAt(modelRow, iOriginal);
+		return (Object[]) this.getValueAt(modelRow, iOriginal);
 	}
 
 	/**
@@ -241,7 +224,6 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	 */
 	@Override
 	public Object[] createNew() throws Exception {
-		Object entity = this.getCls().newInstance();
 		Object[] datas = new Object[this.getColumnCount()];
 		JSTableColumn[] cols = getTableColumns();
 
@@ -253,35 +235,23 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 		// 初始化数据
 		for (int i = 0; i < cols.length; i++) {
 			JSTableColumn column = cols[i];
-			String colName = column.getIdentifier().toString();
-			int findColumn = this.findColumn(colName);
-			if (findColumn < 0)
-				continue;
+			Object[] original = new Object[cols.length - 1];
 
 			// 无数据绑定列
-			if (null == colName || colName.length() <= 0) {
-
-			} else if (originalCol == i){
-				datas[originalCol] = entity;
-			}
-			else // 有数据绑定列
+			if (originalCol == i) {
+				datas[originalCol] = original;
+			} else // 有数据绑定列
 			{
-				Field field = this.getCls().getDeclaredField(colName);
-				if (field == null)
-					continue;
-
-				field.setAccessible(true);
-
 				if (null == column.getDefaultValue()) {
-					datas[findColumn] = null;
-					field.set(entity, null);
+					datas[i] = null;
+					original[i] = null;
 				} else {
-					datas[findColumn] = column.getDefaultValue();
-					field.set(entity, datas[findColumn]);
+					datas[i] = column.getDefaultValue();
+					original[i] = datas[i];
 				}
 			}
 		}
-		
+
 		return datas;
 	}
 
@@ -307,7 +277,6 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	 * @see javax.swing.event.TableModelListener#tableChanged(javax.swing.event.
 	 * TableModelEvent)
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public void tableChanged(TableModelEvent e) {
 		// insert 是直接在 tablemodel插入数据的，所以我觉得不用单独在时间里操作了
@@ -321,31 +290,21 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 				if (findColumn < 0)
 					throw new Exception("get orignal data column fail");
 
-				Object entity = this.getValueAt(iRow, findColumn);
-				if (entity == null)
+				Object[] original = (Object[]) this.getValueAt(iRow, findColumn);
+				if (original == null)
 					throw new Exception("get orignal data fail");
 
-				String colName = this.getColumnName(e.getColumn());
-				if (colName == null || colName.length() <= 0)
-					return;
-				
-				Field field = getCls().getDeclaredField(colName);
-				field.setAccessible(true);
-				JSTableColumn[] columns = this.getTableColumns();
-				int iFind = this.findColumn(colName);
-				JSTableColumn curColumn = columns[iFind];
-				field.set(entity, this.getTableModelLinster().getDataTranstor(curColumn,
-						this.getValueAt(e.getFirstRow(), e.getColumn()), field.getType()));
+				original[e.getColumn()] = this.getValueAt(e.getFirstRow(), e.getColumn());
 
-				if (this.creates.contains(entity)) {
+				if (this.creates.contains(original)) {
 					// 如果新增行包含数据
-				} else if (this.modifies.contains(entity)) {
+				} else if (this.modifies.contains(original)) {
 					// 如果是在更新组里的话
 				} else {
-					this.modifies.add((E) entity);
+					this.modifies.add(original);
 				}
 				// 以下这句会引起连锁反应，比如在窗口上更新了一个数据，然后会重新激发本事件代码，但是列变成了col_orginal
-				this.setValueAt(entity, iRow, findColumn);
+				this.setValueAt(original, iRow, findColumn);
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			} finally {
@@ -376,7 +335,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 			}
 
 			if (orginal != null && !orginal.isEmpty()) {
-				for (Object entity : orginal) {
+				for (Object[] entity : orginal) {
 					// 假设已经生成完成了列的映射，然后根据列绑定的次序我们插入数据
 					// 数据集合
 					Object[] datas = new Object[getColumnCount()];
@@ -388,9 +347,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 							if (null == colName || colName.length() <= 0) {
 								datas[i] = null;
 							} else {
-								Field field = getCls().getDeclaredField(colName);
-								field.setAccessible(true);
-								datas[i] = field.get(entity);
+								datas[i] = entity[i];
 							}
 						}
 					}
@@ -412,24 +369,23 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean onDelete(int moduleRow) throws Exception {
 		int findColumn = this.findColumn(JSTableColumn.COLUMN_ORIGINAL);
 		if (findColumn < 0)
 			return false;
 
-		Object entity = this.getValueAt(moduleRow, findColumn);
+		Object[] entity = (Object[])this.getValueAt(moduleRow, findColumn);
 		if (entity == null)
 			return false;
 
 		if (this.modifies.contains(entity)) {
-			this.deletes.add((E) entity);
+			this.deletes.add(entity);
 			this.modifies.remove(entity);
 		} else if (this.creates.contains(entity)) {
 			this.creates.remove(entity);
 		} else {
-			this.deletes.add((E) entity);
+			this.deletes.add(entity);
 		}
 
 		this.removeRow(moduleRow);
@@ -439,13 +395,12 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean onInsert(int moduleRow) throws Exception {
 		Object[] datas = createNew();
 
 		int findColumn = this.findColumn(JSTableColumn.COLUMN_ORIGINAL);
-		this.creates.add((E) datas[findColumn]);
+		this.creates.add((Object[])datas[findColumn]);
 		this.insertRow(moduleRow, datas);
 
 		return true;
@@ -454,13 +409,12 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	/**
 	 * {@inheritDoc}
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public boolean onAppend() throws Exception {
 		Object[] datas = createNew();
 
 		int findColumn = this.findColumn(JSTableColumn.COLUMN_ORIGINAL);
-		this.creates.add((E) datas[findColumn]);
+		this.creates.add((Object[]) datas[findColumn]);
 		this.addRow(datas);
 
 		return true;
