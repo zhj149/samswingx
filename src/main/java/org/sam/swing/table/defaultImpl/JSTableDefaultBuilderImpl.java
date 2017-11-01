@@ -6,6 +6,7 @@ import org.sam.swing.table.JSTableBuilder;
 import org.sam.swing.table.JSTableColumn;
 import org.sam.swing.table.JSTableColumnModel;
 import org.sam.swing.table.JSTableModel;
+import org.sam.swing.table.JSTableModelLinster;
 
 /**
  * 默认的tablemodel和columnmodel实现
@@ -17,9 +18,12 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<List<E>> {
 
 	/**
 	 * 当前的column列表
-	 */
+	 */	
 	private JSTableColumn[] columns;
 	
+	/**
+	 * 当前的类型
+	 */
 	private Class<E> cls;
 	
 	/**
@@ -36,8 +40,17 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<List<E>> {
 	 */
 	public void setColumns(JSTableColumn[] columns) {
 		this.columns = columns;
-		
 	}
+	
+	/**
+	 * 缓存的colmodel对象
+	 */
+	private JSTableColumnModel colModel;
+	
+	/**
+	 *  缓存的tablemodel对象
+	 */
+	private JSTableModel<List<E>> tableModel;
 
 	/**
 	 * 带有列信息的构造函数
@@ -68,6 +81,8 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<List<E>> {
 			colModel.addColumn(col);
 			i++;
 		}
+		
+		this.colModel = colModel;
 
 		return colModel;
 	}
@@ -93,8 +108,40 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<List<E>> {
 			column.setHeaderValue(JSTableColumn.COLUMN_ORIGINAL);
 			tabModel.addColumn(column);
 		}
+		
+		this.tableModel = tabModel;
 
 		return tabModel;
 	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	public JSTableModelLinster<List<E>> buildModelLinster(JSTableModel<List<E>> tableModel) throws Exception{
+		JSTableModelDefaultAdapter<E> adapter = new JSTableModelDefaultAdapter<>(tableModel);
+		tableModel.setTableModelLinster(adapter);
+		return adapter;
+	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public JSTableModel<List<E>> getTableModel() throws Exception {
+		if (this.tableModel == null)
+			this.tableModel = buildTableModel();
+		
+		return this.tableModel;
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public JSTableColumnModel getTableColumnModel() throws Exception {
+		if (this.colModel == null)
+			this.colModel = buildTableColumnModel();
+		
+		return this.colModel;
+	}
 }
