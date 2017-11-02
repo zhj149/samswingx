@@ -19,10 +19,10 @@ public class App
 			e.printStackTrace();
 		}
     	
-//    	JFrameDefaultTableDemo frm = new JFrameDefaultTableDemo();
-//    	frm.setSize(1024 , 768);
-//    	frm.setLocationRelativeTo(null); //在屏幕上居中
-//        frm.setVisible(true);
+    	JFrameDefaultTableDemo frm = new JFrameDefaultTableDemo();
+    	frm.setSize(1024 , 768);
+    	frm.setLocationRelativeTo(null); //在屏幕上居中
+        frm.setVisible(true);
        
     	JFrameDemo frame = new JFrameDemo();
         frame.setVisible(true);

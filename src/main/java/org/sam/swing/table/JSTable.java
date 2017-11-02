@@ -9,8 +9,6 @@ import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Vector;
 
 import javax.swing.JLabel;
@@ -332,51 +330,9 @@ public class JSTable extends JXTable implements KeyListener {
 		}
 
 		Class<?> colType = orginal.getClass();
-		if (colType.equals(Integer.class)) {
-			if (value.trim().length() <= 0) {
-				this.setValueAt(null, row, column);
-			} else if (value.equals("true") || value.equals("false")) {
-				this.setValueAt(value.equals("true") ? 1 : 0, row, column);
-			} else {
-				this.setValueAt(Integer.parseInt(value), row, column);
-			}
-		} else if (colType.equals(String.class)) {
-			this.setValueAt(value, row, column);
-		} else if (colType.equals(Double.class)) {
-			if (value.trim().length() <= 0) {
-				this.setValueAt(null, row, column);
-			} else {
-				this.setValueAt(Double.parseDouble(value), row, column);
-			}
-		} else if (colType.equals(Float.class)) {
-			if (value.trim().length() <= 0) {
-				this.setValueAt(null, row, column);
-			} else {
-				this.setValueAt(Float.parseFloat(value), row, column);
-			}
-		} else if (colType.equals(Long.class)) {
-			if (value.trim().length() <= 0) {
-				this.setValueAt(null, row, column);
-			} else {
-				this.setValueAt(Long.parseLong(value), row, column);
-			}
-		} else if (colType.equals(Character.class)) {
-			this.setValueAt(value.toCharArray()[0], row, column);
-		} else if (colType.equals(Boolean.class)) {
-			this.setValueAt(Boolean.parseBoolean(value), row, column);
-		} else if (colType.equals(Short.class)) {
-			this.setValueAt(Short.parseShort(value), row, column);
-		} else if (colType.equals(Date.class)) {
-			if (value.trim().equals("") || value.equals("0000-00-00") || value.equals("0000/00/00")
-					|| value.equals("0000-00-00 00:00:00") || value.equals("0000-00-00-00-00-00")
-					|| value.equals("0000/00/00 00:00:00")) {
-				this.setValueAt(null, row, column);
-			}
-		} else if (colType.equals(BigDecimal.class)) {
-			this.setValueAt(new BigDecimal(value), row, column);
-		} else {
-			this.setValueAt(value, row, column);
-		}
+		JSTableColumn col = (JSTableColumn) this.getColumn(column);
+		Object data = ((JSTableModel<?>) this.getModel()).getTableModelLinster().getDataTranstor(col, value, colType);
+		this.setValueAt(data, row, column);
 	}
 
 	// end

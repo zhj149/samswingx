@@ -341,13 +341,14 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> implements T
 					Object[] datas = new Object[getColumnCount()];
 					for (int i = 0; i < getColumnCount(); i++) {
 						String colName = getColumnName(i);
+						
 						if (JSTableColumn.COLUMN_ORIGINAL.equals(colName)) {
 							datas[i] = entity;
 						} else {
 							if (null == colName || colName.length() <= 0) {
 								datas[i] = null;
 							} else {
-								datas[i] = entity[i];
+								datas[i] = entity[Integer.valueOf(colName)];
 							}
 						}
 					}

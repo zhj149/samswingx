@@ -147,109 +147,19 @@ public class ResourceLoader
 	public static final String IMAGE_LOGO = "logo.png";
 	
 	/**
-	 * 打开shp图层的操作
+	 * 选中
 	 */
-	public static final String IMAGE_GEO_OPEN_SHP = "OpenLayer.png";
+	public static final String IMAGE_SELECT = "select.png";
+
+	/**
+	 * 未选中
+	 */
+	public static final String IMAGE_UNSELECT = "unselect.png";
 	
 	/**
-	 * 连接到数据库的图标
+	 * 反选
 	 */
-	public static final String IMAGE_GEO_CONNECT_DB = "connectdb.png";
-	
-	/**
-	 * 样式
-	 */
-	public static final String IMAGE_GEO_STYLE = "style.gif";
-	
-	/**
-	 * 选中图元对象的图标
-	 */
-	public static final String IMAGE_GEO_SELECTOR = "selectgeo.png";
-	
-	/**
-	 * 图层数据集合
-	 */
-	public static final String IMAGE_GEO_DATASTORE = "datastore.png";
-	
-	/**
-	 * 选中数据集合
-	 */
-	public static final String IMAGE_GEO_SELECTDATASTORE = "selecteddatastore.png";
-	
-	/**
-	 * 新增点的图片
-	 */
-	public static final String IMAGE_POINT_ADD = "point.png";
-	
-	/**
-	 * 线条的图片
-	 */
-	public static final String IMAGE_LINE = "line.png";
-	
-	/**
-	 * 多边形的图片
-	 */
-	public static final String IMAGE_POLYGON = "polygon.png";
-	
-	/**
-	 * 开始编辑的图片
-	 */
-	public static final String IMAGE_EDIT_BEGIN = "geoedit.png";
-	
-	/**
-	 * 结束编辑的图片
-	 */
-	public static final String IMAGE_EDIT_END = "geosave.png"; 
-	
-	/**
-	 * 选择地理信息对象图片
-	 */
-	public static final String IMAGE_GEO_SELECT = "selectgeo.png";
-	/**
-	 * 简单选择对象
-	 */
-	public static final String IMAGE_GEO_SIMPLE_SELECT = "pointer.png";
-	/**
-	 * 移除点的图片
-	 */
-	public static final String IMAGE_GEO_REMOVE = "removegeo.png";
-	/**
-	 * 编辑物理跑道图标
-	 */
-	public static final String IMAGE_ADD_RUNWAY = "runway.png";
-	/**
-	 * 编辑逻辑跑道图标
-	 */
-	public static final String IMAGE_ADD_RUNWAY_LOGIC = "runwayLogic.png";
-	/**
-	 * 地面点
-	 */
-	public static final String IMAGE_ADD_GROUND_POINT = "groundPoint.png";
-	
-	/**
-	 * 滑行道编辑按钮
-	 */
-	public static final String IMAGE_ADD_TAXIWAY = "taxiway.png";
-	
-	/**
-	 * 延长线功能
-	 */
-	public static final String IMAGE_GEO_EXTENSION_LINE = "extension-line.png";
-	
-	/**
-	 * 停机位编辑按钮
-	 */
-	public static final String IMAGE_ADD_PARKINGPOINT = "parkingPoint.png";
-			
-	/**
-	 * 跑道入口编辑按钮
-	 */
-	public static final String IMAGE_ADD_RUNWAYENTRY = "runwayEntry.png";
-	
-	/**
-	 * 跑道出口编辑按钮
-	 */
-	public static final String IMAGE_ADD_RUNWAYEXIT = "runwayExit.png";
+	public static final String IMAGE_INVERT_SELECT = "invertselect16.png";
 	
 	//end
 	
