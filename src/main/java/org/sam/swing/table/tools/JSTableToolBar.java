@@ -434,7 +434,7 @@ public class JSTableToolBar extends JToolBar {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			try {
-				table.update();
+				table.append();
 			} catch (Exception ex) {
 				ex.printStackTrace();
 			}
@@ -693,10 +693,13 @@ public class JSTableToolBar extends JToolBar {
 	 * @return
 	 */
 	public JButton buildButton(String image, String text, String toolTip, ActionListener listener) {
-
 		final JButton btn = new JButton(text, new ImageIcon(ResourceLoader.getResource(image)));
 		btn.addActionListener(listener);
 		btn.setToolTipText(toolTip);
+		btn.setFocusable(true);
+		btn.setBorderPainted(false);
+		btn.setContentAreaFilled(false);
+		btn.setDefaultCapable(true);
 		return btn;
 	}
 
@@ -787,7 +790,7 @@ public class JSTableToolBar extends JToolBar {
 	 * @return
 	 */
 	public JSFindBar buildSearchBar() {
-		JSFindBar searchBar = new JSFindBar(table.getSearchable());
+		JSFindBar searchBar = new JSFindBar(table.getSearchable() , this.getModel() , this.table.getColumnModel());
 		return searchBar;
 	}
 }

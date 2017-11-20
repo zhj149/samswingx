@@ -126,12 +126,24 @@ public class JSTable extends JXTable implements KeyListener {
 	 * @throws Exception
 	 */
 	public void delete() throws Exception {
-		int iRow = this.getSelectedRow();
-		if (iRow < 0) {
+		int selectedRowCount = this.getSelectedRowCount();
+		if (selectedRowCount <= 0) {
 			JOptionPane.showMessageDialog(null, "请选择您要删除的数据行");
 			return;
+		} else if (selectedRowCount == 1) {
+			int iRow = this.getSelectedRow();
+			((JSTableModel<?>) this.getModel()).delete(this.convertRowIndexToModel(iRow));
+		} else {
+			// > 1的情况
+			int confim = JOptionPane.showConfirmDialog(null, "您将删除【" + selectedRowCount + "】行数据，是否删除?");
+			if (confim == JOptionPane.OK_OPTION) {
+				int[] selectedRows = this.getSelectedRows();
+				for (int i = selectedRowCount - 1; i >= 0; i--) {
+					JSTableModel<?> model = (JSTableModel<?>) this.getModel();
+					model.delete(this.convertRowIndexToModel(selectedRows[i]));
+				}
+			}
 		}
-		((JSTableModel<?>) this.getModel()).delete(this.convertRowIndexToModel(iRow));
 	}
 
 	/**
