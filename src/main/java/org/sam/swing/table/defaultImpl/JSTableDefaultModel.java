@@ -7,6 +7,7 @@ import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.sam.swing.table.JSTableColumn;
 import org.sam.swing.table.JSTableModel;
 import org.sam.swing.table.JSTableModelLinster;
@@ -261,10 +262,9 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 			// 无数据绑定列
 			if (null == colName || colName.length() <= 0) {
 
-			} else if (originalCol == i){
+			} else if (originalCol == i) {
 				datas[originalCol] = entity;
-			}
-			else // 有数据绑定列
+			} else // 有数据绑定列
 			{
 				Field field = this.getCls().getDeclaredField(colName);
 				if (field == null)
@@ -281,7 +281,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 				}
 			}
 		}
-		
+
 		return datas;
 	}
 
@@ -291,16 +291,56 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 	@Override
 	public void clear() throws Exception {
 
-		this.resetUpdate();
-
 		for (int i = this.getRowCount() - 1; i >= 0; i--) {
 			this.removeRow(i);
 		}
+		
+		this.resetUpdate();
 
 		if (this.orginal != null)
 			this.orginal.clear();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public void insert(int row, Object t) throws Exception {
+		E e = (E) t;
+
+		// 假设已经生成完成了列的映射，然后根据列绑定的次序我们插入数据
+		// 数据集合
+		Object[] datas = new Object[getColumnCount()];
+
+		if (e != null) {
+			for (int i = 0; i < getColumnCount(); i++) {
+				String colName = getColumnName(i);
+				if (JSTableColumn.COLUMN_ORIGINAL.equals(colName)) {
+					datas[i] = e;
+				} else {
+					if (null == colName || colName.length() <= 0) {
+						datas[i] = null;
+					} else {
+						Field field = getCls().getDeclaredField(colName);
+						field.setAccessible(true);
+						datas[i] = field.get(e);
+					}
+				}
+			}
+		}
+
+		addRow(datas);
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void replace(int row, Object t) throws Exception {
+		throw new NotImplementedException("there is nothing");
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -328,7 +368,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> implements Tab
 				String colName = this.getColumnName(e.getColumn());
 				if (colName == null || colName.length() <= 0)
 					return;
-				
+
 				Field field = getCls().getDeclaredField(colName);
 				field.setAccessible(true);
 				JSTableColumn[] columns = this.getTableColumns();

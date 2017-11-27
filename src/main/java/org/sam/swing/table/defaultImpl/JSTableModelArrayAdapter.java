@@ -20,16 +20,15 @@ public class JSTableModelArrayAdapter implements JSTableModelLinster<List<Object
 	private JSTableModel<List<Object[]>> tableModel;
 	
 	/**
-	 * 当前的tablemodel
-	 * @return
+	 * {@inheritDoc}
 	 */
+	@Override
 	public JSTableModel<List<Object[]>> getTableModel() {
 		return tableModel;
 	}
 
 	/**
-	 * 当前的操作tabelmodel对象
-	 * @param tableModel
+	 * {@inheritDoc}
 	 */
 	public void setTableModel(JSTableModel<List<Object[]>> tableModel) {
 		this.tableModel = tableModel;

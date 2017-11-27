@@ -18,12 +18,11 @@ public abstract class JSTableModel<T> extends DefaultTableModel {
 	 * 
 	 */
 	private static final long serialVersionUID = 5129544725258528221L;
-	
+
 	/**
 	 * 无数据行的构造函数
 	 */
-	public JSTableModel()
-	{
+	public JSTableModel() {
 		super();
 	}
 
@@ -34,7 +33,7 @@ public abstract class JSTableModel<T> extends DefaultTableModel {
 	 *            当前的列集合
 	 */
 	public JSTableModel(JSTableColumn[] cols) {
-		super(0,cols.length);
+		super(0, cols.length);
 		this.setColumnIdentifiers(cols);
 	}
 
@@ -98,44 +97,48 @@ public abstract class JSTableModel<T> extends DefaultTableModel {
 	 * 清空所有缓冲区
 	 */
 	public abstract void resetUpdate();
-	
+
 	/**
 	 * 初始化数据的操作
+	 * 
 	 * @return 0无数据 -1出错 成功返回行数
 	 * @exception Exception
 	 */
 	public abstract int onRetrieve() throws Exception;
-	
+
 	/**
 	 * 删除时候执行的操作
+	 * 
 	 * @return
 	 * @exception Exception
 	 */
 	public abstract boolean onDelete(int moduleRow) throws Exception;
-	
+
 	/**
 	 * 插入的时候执行的操作
+	 * 
 	 * @param moduleRow
 	 * @return
 	 * @exception Exception
 	 */
 	public abstract boolean onInsert(int moduleRow) throws Exception;
-	
+
 	/**
 	 * 当执行追加的时候执行的操作
+	 * 
 	 * @return
 	 * @exception Exception
 	 */
 	public abstract boolean onAppend() throws Exception;
-	
+
 	/**
 	 * 获取列列表
+	 * 
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	public JSTableColumn[] getTableColumns()
-	{
-		return (JSTableColumn[])this.columnIdentifiers.toArray(new JSTableColumn[this.getColumnCount()]);
+	public JSTableColumn[] getTableColumns() {
+		return (JSTableColumn[]) this.columnIdentifiers.toArray(new JSTableColumn[this.getColumnCount()]);
 	}
 
 	/**
@@ -324,6 +327,32 @@ public abstract class JSTableModel<T> extends DefaultTableModel {
 	public abstract Object getData(int modelRow) throws Exception;
 
 	/**
+	 * 拿到一个一个单元格对应的数据
+	 * 
+	 * @param modelRow
+	 *            模式行
+	 * @return
+	 * @throws Exception
+	 */
+	public Object[] getCellData(int modelRow) throws Exception {
+		
+		int iOriginal = this.findColumn(JSTableColumn.COLUMN_ORIGINAL);
+		if (iOriginal < 0)
+			throw new Exception("Not include original data");
+
+		if (modelRow < 0 || modelRow >= this.getRowCount())
+			throw new Exception("modelRow over index");
+
+		Object[] datas = new Object[this.getColumnCount()];
+
+		for (int i = 0; i < this.getColumnCount(); i++) {
+			datas[i] = this.getValueAt(modelRow, i);
+		}
+
+		return datas;
+	}
+
+	/**
 	 * 新生成一个数据,但不插入集合
 	 * 
 	 * @return 新生成一个数据集合
@@ -337,6 +366,51 @@ public abstract class JSTableModel<T> extends DefaultTableModel {
 	 * @throws Exception
 	 */
 	public abstract void clear() throws Exception;
+	
+	/**
+	 * 使用泛型类型插入一行数据
+	 * @param row 要插入行的位置
+	 * @param t 数据
+	 * @throws Exception
+	 */
+	public abstract void insert(int row , Object t) throws Exception;
+	
+	/**
+	 * 替换掉行的数据操作
+	 * @param row
+	 * @param t
+	 * @throws Exception
+	 */
+	public abstract void replace(int row , Object t) throws Exception;
+	
+	/**
+	 * 获取一列的数据
+	 * @param colIndex 列所在的model索引位置
+	 * @param beginRow 开始行
+	 * @param endRow 结束行
+	 * @throws Exception
+	 */
+	public Object[] getColData(int colIndex , int beginRow , int endRow) throws Exception{
+		
+		if (colIndex < 0 || colIndex >= this.getColumnCount())
+			throw new Exception("column over index");
+
+		if (beginRow < 0 || beginRow >= this.getRowCount())
+			throw new Exception("beginRow over index");
+
+		if (endRow < 0 || endRow >= this.getRowCount())
+			throw new Exception("endRow over index");
+		
+		if (beginRow > endRow)
+			throw new Exception("beginRow more than endRow");
+		
+		Object[] result = new Object[endRow - beginRow + 1];
+		for ( int i = beginRow ; i <= endRow; i++){
+			result[i] = this.getValueAt(i, colIndex);
+		}
+		
+		return result;
+	}
 
 	/**
 	 * 更新操作
@@ -440,7 +514,7 @@ public abstract class JSTableModel<T> extends DefaultTableModel {
 		this.getTableModelLinster().aftterAppend(event);
 
 		return true;
-		
+
 	}
 
 	/**
@@ -451,7 +525,7 @@ public abstract class JSTableModel<T> extends DefaultTableModel {
 	 * @throws Exception
 	 */
 	public boolean insert(int modelRow) throws Exception {
-		
+
 		JSTableModelEvent event = new JSTableModelEvent(this);
 		event.setRow(modelRow);
 

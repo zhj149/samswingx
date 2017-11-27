@@ -14,6 +14,18 @@ import java.util.EventListener;
 public interface JSTableModelLinster<E> extends EventListener {
 	
 	/**
+	 * 当前的tablemodel
+	 * @return
+	 */
+	public void setTableModel(JSTableModel<E> tableModel);
+
+	/**
+	 * 当前的tablemodel
+	 * @return
+	 */
+	public JSTableModel<E> getTableModel();
+	
+	/**
 	 * 在加载数据前执行的操作
 	 * 
 	 * @param event
@@ -212,4 +224,5 @@ public interface JSTableModelLinster<E> extends EventListener {
 			return value;
 		}
 	}
+	
 }

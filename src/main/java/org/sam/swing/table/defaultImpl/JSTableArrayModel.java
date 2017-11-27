@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.sam.swing.table.JSTableColumn;
 import org.sam.swing.table.JSTableModel;
 import org.sam.swing.table.JSTableModelLinster;
@@ -218,7 +219,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> implements T
 
 		return (Object[]) this.getValueAt(modelRow, iOriginal);
 	}
-
+	
 	/**
 	 * {@inheritDoc}
 	 */
@@ -261,14 +262,54 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> implements T
 	@Override
 	public void clear() throws Exception {
 
-		this.resetUpdate();
-
 		for (int i = this.getRowCount() - 1; i >= 0; i--) {
 			this.removeRow(i);
 		}
+		
+		this.resetUpdate();
 
 		if (this.orginal != null)
 			this.orginal.clear();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void insert(int row, Object t) throws Exception {
+		Object[] e = (Object[]) t;
+
+		// 假设已经生成完成了列的映射，然后根据列绑定的次序我们插入数据
+		// 数据集合
+		Object[] datas = new Object[getColumnCount()];
+
+		if (e != null) {
+			// 假设已经生成完成了列的映射，然后根据列绑定的次序我们插入数据
+			// 数据集合
+			for (int i = 0; i < getColumnCount(); i++) {
+				String colName = getColumnName(i);
+				
+				if (JSTableColumn.COLUMN_ORIGINAL.equals(colName)) {
+					datas[i] = e;
+				} else {
+					if (null == colName || colName.length() <= 0) {
+						datas[i] = null;
+					} else {
+						datas[i] = e[Integer.valueOf(colName)];
+					}
+				}
+			}
+		}
+
+		addRow(datas);
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void replace(int row, Object t) throws Exception {
+		throw new NotImplementedException("there is nothing");
 	}
 
 	/*
@@ -420,4 +461,5 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> implements T
 
 		return true;
 	}
+
 }

@@ -20,17 +20,17 @@ public class JSTableModelDefaultAdapter<E> implements JSTableModelLinster<List<E
 	private JSTableModel<List<E>> tableModel;
 	
 	/**
-	 * 当前的tablemodel
-	 * @return
+	 * {@inheritDoc}
 	 */
+	@Override
 	public JSTableModel<List<E>> getTableModel() {
 		return tableModel;
 	}
 
 	/**
-	 * 当前的操作tabelmodel对象
-	 * @param tableModel
+	 * {@inheritDoc}
 	 */
+	@Override
 	public void setTableModel(JSTableModel<List<E>> tableModel) {
 		this.tableModel = tableModel;
 	}
