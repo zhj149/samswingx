@@ -4,7 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.sam.swing.table.JSTableColumn;
@@ -19,7 +18,7 @@ import org.sam.swing.table.JSTableModelLinster;
  * @param <E>
  *            实体类型
  */
-public class JSTableArrayModel extends JSTableModel<List<Object[]>> implements TableModelListener {
+public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 
 	private static final long serialVersionUID = -7100624972070901341L;
 
@@ -362,7 +361,6 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> implements T
 	public int onRetrieve() throws Exception {
 		try {
 
-			this.removeTableModelListener(this);
 			orginal = this.getTableModelLinster().onRetrieve();
 
 			/**
@@ -402,9 +400,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> implements T
 		} catch (Exception e) {
 			e.printStackTrace();
 			return -1;
-		} finally {
-			this.addTableModelListener(this);
-		}
+		} 
 		return 0;
 	}
 
