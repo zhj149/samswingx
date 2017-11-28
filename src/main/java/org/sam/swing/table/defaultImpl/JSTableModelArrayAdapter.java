@@ -2,7 +2,6 @@ package org.sam.swing.table.defaultImpl;
 
 import java.util.List;
 
-import org.sam.swing.table.JSTableModel;
 import org.sam.swing.table.JSTableModelEvent;
 import org.sam.swing.table.JSTableModelLinster;
 
@@ -13,11 +12,6 @@ import org.sam.swing.table.JSTableModelLinster;
  * @param <E>
  */
 public class JSTableModelArrayAdapter implements JSTableModelLinster<List<Object[]>> {
-	
-	/**
-	 * 当前的tablemodel对象
-	 */
-	private JSTableModel<List<Object[]>> tableModel;
 	
 	/**
 	 * 带有构造函数的tableModel
@@ -32,7 +26,7 @@ public class JSTableModelArrayAdapter implements JSTableModelLinster<List<Object
 	 */
 	@Override
 	public void beforRetrieve(JSTableModelEvent event) throws Exception {
-		tableModel.clear();
+		event.getTableModel().clear();
 	}
 
 	/**
@@ -70,7 +64,7 @@ public class JSTableModelArrayAdapter implements JSTableModelLinster<List<Object
 	 */
 	@Override
 	public void atfterUpdate(JSTableModelEvent event) throws Exception {
-		tableModel.resetUpdate();
+		event.getTableModel().resetUpdate();
 	}
 
 	/**
