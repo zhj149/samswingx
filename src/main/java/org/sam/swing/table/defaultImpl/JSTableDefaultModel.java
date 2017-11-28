@@ -67,7 +67,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
 	public JSTableModelLinster<List<E>> getTableModelLinster() {
 
 		if (super.getTableModelLinster() == null)
-			this.setTableModelLinster(new JSTableModelDefaultAdapter<E>(this));
+			this.setTableModelLinster(new JSTableModelDefaultAdapter<E>());
 		return super.getTableModelLinster();
 	}
 

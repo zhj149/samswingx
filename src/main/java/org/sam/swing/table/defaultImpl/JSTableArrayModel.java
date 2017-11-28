@@ -60,7 +60,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 	public JSTableModelLinster<List<Object[]>> getTableModelLinster() {
 
 		if (super.getTableModelLinster() == null)
-			this.setTableModelLinster(new JSTableModelArrayAdapter(this));
+			this.setTableModelLinster(new JSTableModelArrayAdapter());
 		return super.getTableModelLinster();
 	}
 

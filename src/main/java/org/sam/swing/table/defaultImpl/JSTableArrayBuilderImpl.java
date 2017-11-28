@@ -112,7 +112,7 @@ public class JSTableArrayBuilderImpl implements JSTableBuilder<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	public JSTableModelLinster<List<Object[]>> buildModelLinster(JSTableModel<List<Object[]>> tableModel) throws Exception{
-		JSTableModelArrayAdapter adapter = new JSTableModelArrayAdapter(tableModel);
+		JSTableModelArrayAdapter adapter = new JSTableModelArrayAdapter();
 		tableModel.setTableModelLinster(adapter);
 		return adapter;
 	}

@@ -250,7 +250,7 @@ public class JFrameDefaultTableDemo extends JFrame {
 			tableModel = builder.buildTableModel();
 			table = new JSTable(tableModel, colModel);
 
-			tableModel.setTableModelLinster(new JSTableModelDefaultAdapter<TestEntity>(tableModel) {
+			tableModel.setTableModelLinster(new JSTableModelDefaultAdapter<TestEntity>() {
 				/**
 				 * 加载数据的方法
 				 */
