@@ -21,6 +21,7 @@ import javax.swing.table.TableModel;
 
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
+import org.jdesktop.swingx.search.Searchable;
 
 /**
  * 自定义的table对象
@@ -263,7 +264,16 @@ public class JSTable extends JXTable implements KeyListener {
 		module.moveRow(srcRow, tarRow);
 		this.changeSelection(tarRow, 0, false, false);
 	}
-
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Searchable getSearchable() {
+		// TODO Auto-generated method stub
+		return super.getSearchable();
+	}
+	
 	// begin keyevent
 
 	@Override

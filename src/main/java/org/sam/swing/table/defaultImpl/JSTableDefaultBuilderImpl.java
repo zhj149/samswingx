@@ -1,6 +1,6 @@
 package org.sam.swing.table.defaultImpl;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.sam.swing.table.JSTableBuilder;
 import org.sam.swing.table.JSTableColumn;
@@ -14,7 +14,7 @@ import org.sam.swing.table.JSTableModelLinster;
  *
  * @param <E>
  */
-public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<List<E>> {
+public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<Collection<E>> {
 
 	/**
 	 * 当前的column列表
@@ -50,7 +50,7 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<List<E>> {
 	/**
 	 *  缓存的tablemodel对象
 	 */
-	private JSTableModel<List<E>> tableModel;
+	private JSTableModel<Collection<E>> tableModel;
 
 	/**
 	 * 带有列信息的构造函数
@@ -91,7 +91,7 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<List<E>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public JSTableModel<List<E>> buildTableModel() throws Exception {
+	public JSTableModel<Collection<E>> buildTableModel() throws Exception {
 		JSTableDefaultModel<E> tabModel = new JSTableDefaultModel<>(cls);
 
 		if (this.columns == null || this.columns.length <= 0)
@@ -117,8 +117,8 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<List<E>> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public JSTableModelLinster<List<E>> buildModelLinster(JSTableModel<List<E>> tableModel) throws Exception{
-		JSTableModelLinster<List<E>> adapter = new JSTableModelDefaultAdapter<>();
+	public JSTableModelLinster<Collection<E>> buildModelLinster(JSTableModel<Collection<E>> tableModel) throws Exception{
+		JSTableModelLinster<Collection<E>> adapter = new JSTableModelDefaultAdapter<>();
 		tableModel.setTableModelLinster(adapter);
 		return adapter;
 	}
@@ -127,7 +127,7 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<List<E>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public JSTableModel<List<E>> getTableModel() throws Exception {
+	public JSTableModel<Collection<E>> getTableModel() throws Exception {
 		if (this.tableModel == null)
 			this.tableModel = buildTableModel();
 		

@@ -1,6 +1,6 @@
 package org.sam.swing.table.defaultImpl;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.sam.swing.table.JSTableModelEvent;
 import org.sam.swing.table.JSTableModelLinster;
@@ -11,7 +11,7 @@ import org.sam.swing.table.JSTableModelLinster;
  *
  * @param <E>
  */
-public class JSTableModelDefaultAdapter<E> implements JSTableModelLinster<List<E>> {
+public class JSTableModelDefaultAdapter<E> implements JSTableModelLinster<Collection<E>> {
 	
 	/**
 	 * 带有构造函数的tableModel
@@ -34,7 +34,7 @@ public class JSTableModelDefaultAdapter<E> implements JSTableModelLinster<List<E
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> onRetrieve() throws Exception {
+	public Collection<E> onRetrieve() throws Exception {
 		return null;
 	}
 	

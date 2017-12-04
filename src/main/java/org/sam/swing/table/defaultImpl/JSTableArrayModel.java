@@ -1,7 +1,7 @@
 package org.sam.swing.table.defaultImpl;
 
+import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.event.TableModelEvent;
 
@@ -18,29 +18,29 @@ import org.sam.swing.table.JSTableModelLinster;
  * @param <E>
  *            实体类型
  */
-public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
+public class JSTableArrayModel extends JSTableModel<Collection<Object[]>> {
 
 	private static final long serialVersionUID = -7100624972070901341L;
 
 	/**
 	 * 原始的值
 	 */
-	private List<Object[]> orginal;
+	private Collection<Object[]> orginal;
 
 	/**
 	 * 删除的对象集合
 	 */
-	private List<Object[]> deletes = new LinkedList<>();
+	private Collection<Object[]> deletes = new LinkedList<>();
 
 	/**
 	 * 要更新的集合列表
 	 */
-	private List<Object[]> modifies = new LinkedList<>();
+	private Collection<Object[]> modifies = new LinkedList<>();
 
 	/**
 	 * 需要创建的对象列表
 	 */
-	private List<Object[]> creates = new LinkedList<>();
+	private Collection<Object[]> creates = new LinkedList<>();
 
 	/**
 	 * 必须带有实体的构造类型，好变态
@@ -57,7 +57,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 	 * @return
 	 */
 	@Override
-	public JSTableModelLinster<List<Object[]>> getTableModelLinster() {
+	public JSTableModelLinster<Collection<Object[]>> getTableModelLinster() {
 
 		if (super.getTableModelLinster() == null)
 			this.setTableModelLinster(new JSTableModelArrayAdapter());
@@ -68,7 +68,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Object[]> getOrginal() {
+	public Collection<Object[]> getOrginal() {
 		return orginal;
 	}
 
@@ -76,7 +76,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setOrginal(List<Object[]> orginal) {
+	public void setOrginal(Collection<Object[]> orginal) {
 		this.orginal = orginal;
 	}
 
@@ -84,7 +84,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Object[]> getDeletes() {
+	public Collection<Object[]> getDeletes() {
 		return this.deletes;
 	}
 
@@ -92,7 +92,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setDeletes(List<Object[]> deletes) {
+	public void setDeletes(Collection<Object[]> deletes) {
 		this.deletes = deletes;
 	}
 
@@ -100,7 +100,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Object[]> getCreates() {
+	public Collection<Object[]> getCreates() {
 		return this.creates;
 	}
 
@@ -108,7 +108,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setCreates(List<Object[]> creates) {
+	public void setCreates(Collection<Object[]> creates) {
 		this.creates = creates;
 	}
 
@@ -116,7 +116,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Object[]> getModified() {
+	public Collection<Object[]> getModified() {
 		return this.modifies;
 	}
 
@@ -124,7 +124,7 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setModified(List<Object[]> modified) {
+	public void setModified(Collection<Object[]> modified) {
 		this.modifies = modified;
 	}
 
@@ -175,8 +175,8 @@ public class JSTableArrayModel extends JSTableModel<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<Object[]> getDatas() throws Exception {
-		List<Object[]> result = new LinkedList<>();
+	public Collection<Object[]> getDatas() throws Exception {
+		Collection<Object[]> result = new LinkedList<>();
 
 		int iOriginal = this.findColumn(JSTableColumn.COLUMN_ORIGINAL);
 		if (iOriginal < 0)

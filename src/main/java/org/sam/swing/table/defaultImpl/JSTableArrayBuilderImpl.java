@@ -1,6 +1,6 @@
 package org.sam.swing.table.defaultImpl;
 
-import java.util.List;
+import java.util.Collection;
 
 import org.sam.swing.table.JSTableBuilder;
 import org.sam.swing.table.JSTableColumn;
@@ -14,7 +14,7 @@ import org.sam.swing.table.JSTableModelLinster;
  *
  * @param <E>
  */
-public class JSTableArrayBuilderImpl implements JSTableBuilder<List<Object[]>> {
+public class JSTableArrayBuilderImpl implements JSTableBuilder<Collection<Object[]>> {
 
 	/**
 	 * 当前的column列表
@@ -45,7 +45,7 @@ public class JSTableArrayBuilderImpl implements JSTableBuilder<List<Object[]>> {
 	/**
 	 *  缓存的tablemodel对象
 	 */
-	private JSTableModel<List<Object[]>> tableModel;
+	private JSTableModel<Collection<Object[]>> tableModel;
 
 	/**
 	 * 带有列信息的构造函数
@@ -85,7 +85,7 @@ public class JSTableArrayBuilderImpl implements JSTableBuilder<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public JSTableModel<List<Object[]>> buildTableModel() throws Exception {
+	public JSTableModel<Collection<Object[]>> buildTableModel() throws Exception {
 		JSTableArrayModel tabModel = new JSTableArrayModel();
 
 		if (this.columns == null || this.columns.length <= 0)
@@ -111,7 +111,7 @@ public class JSTableArrayBuilderImpl implements JSTableBuilder<List<Object[]>> {
 	/**
 	 * {@inheritDoc}
 	 */
-	public JSTableModelLinster<List<Object[]>> buildModelLinster(JSTableModel<List<Object[]>> tableModel) throws Exception{
+	public JSTableModelLinster<Collection<Object[]>> buildModelLinster(JSTableModel<Collection<Object[]>> tableModel) throws Exception{
 		JSTableModelArrayAdapter adapter = new JSTableModelArrayAdapter();
 		tableModel.setTableModelLinster(adapter);
 		return adapter;
@@ -121,7 +121,7 @@ public class JSTableArrayBuilderImpl implements JSTableBuilder<List<Object[]>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public JSTableModel<List<Object[]>> getTableModel() throws Exception {
+	public JSTableModel<Collection<Object[]>> getTableModel() throws Exception {
 		if (this.tableModel == null)
 			this.tableModel = buildTableModel();
 		

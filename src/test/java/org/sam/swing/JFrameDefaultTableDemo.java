@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -25,7 +26,6 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jdesktop.swingx.table.DatePickerCellEditor;
-import org.sam.swing.JSColorComboBox;
 import org.sam.swing.resource.ResourceLoader;
 import org.sam.swing.table.JSTable;
 import org.sam.swing.table.JSTableBuilder;
@@ -73,7 +73,7 @@ public class JFrameDefaultTableDemo extends JFrame {
 	/**
 	 * tablemodel
 	 */
-	private JSTableModel<List<TestEntity>> tableModel;
+	private JSTableModel<Collection<TestEntity>> tableModel;
 
 	/**
 	 * colmodel
@@ -244,7 +244,7 @@ public class JFrameDefaultTableDemo extends JFrame {
 		});
 
 		try {
-			JSTableBuilder<List<TestEntity>> builder = new JSTableDefaultBuilderImpl<>(TestEntity.class, col0, col1,
+			JSTableBuilder<Collection<TestEntity>> builder = new JSTableDefaultBuilderImpl<>(TestEntity.class, col0, col1,
 					col2, col3, col4, col5, col6, col7, col8,col9,col10);
 			colModel = builder.buildTableColumnModel();
 			tableModel = builder.buildTableModel();
@@ -254,7 +254,7 @@ public class JFrameDefaultTableDemo extends JFrame {
 				/**
 				 * 加载数据的方法
 				 */
-				public List<TestEntity> onRetrieve() throws Exception {
+				public Collection<TestEntity> onRetrieve() throws Exception {
 
 					List<TestEntity> result = new LinkedList<>();
 					for (int i = 0; i < 1000; i++) {

@@ -382,11 +382,27 @@ public abstract class JSTableModel<T> extends DefaultTableModel implements Table
 	/**
 	 * 替换掉行的数据操作
 	 * 
-	 * @param row
-	 * @param t
+	 * @param row 行
+	 * @param t 数据
 	 * @throws Exception
 	 */
 	public abstract void replace(int row, Object t) throws Exception;
+	
+	/**
+	 * 更新一个单元格数据，但是不记录到系统里
+	 * @param aValue 新值
+	 * @param row 行号
+	 * @param column 列
+	 * @throws Exception
+	 */
+	public void updateValueAt(Object aValue , int row , int column) throws Exception{
+		this.removeTableModelListener(this);
+		try{
+			this.setValueAt(aValue, row, column);
+		} finally {
+			this.addTableModelListener(this);
+		}
+	}
 
 	/**
 	 * 获取一列的数据

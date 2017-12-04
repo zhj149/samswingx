@@ -19,7 +19,6 @@ import org.jdesktop.swingx.JXDialog;
 import org.jdesktop.swingx.action.AbstractActionExt;
 import org.jdesktop.swingx.action.ActionContainerFactory;
 import org.jdesktop.swingx.action.BoundAction;
-import org.jdesktop.swingx.plaf.LookAndFeelAddons;
 import org.jdesktop.swingx.plaf.UIManagerExt;
 import org.jdesktop.swingx.search.PatternModel;
 

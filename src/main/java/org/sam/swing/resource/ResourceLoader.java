@@ -161,6 +161,11 @@ public class ResourceLoader
 	 */
 	public static final String IMAGE_INVERT_SELECT = "invertselect16.png";
 	
+	/**
+	 * 向下的箭头
+	 */
+	public static final String IMAGE_DOWN_ARROW = "down.png";
+	
 	//end
 	
 	/**

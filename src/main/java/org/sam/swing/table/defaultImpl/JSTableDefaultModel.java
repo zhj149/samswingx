@@ -1,8 +1,8 @@
 package org.sam.swing.table.defaultImpl;
 
 import java.lang.reflect.Field;
+import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.event.TableModelEvent;
 
@@ -19,29 +19,29 @@ import org.sam.swing.table.JSTableModelLinster;
  * @param <E>
  *            实体类型
  */
-public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
+public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 
 	private static final long serialVersionUID = -7100624972070901341L;
 
 	/**
 	 * 原始的值
 	 */
-	private List<E> orginal;
+	private Collection<E> orginal;
 
 	/**
 	 * 删除的对象集合
 	 */
-	private List<E> deletes = new LinkedList<>();
+	private Collection<E> deletes = new LinkedList<>();
 
 	/**
 	 * 要更新的集合列表
 	 */
-	private List<E> modifies = new LinkedList<>();
+	private Collection<E> modifies = new LinkedList<>();
 
 	/**
 	 * 需要创建的对象列表
 	 */
-	private List<E> creates = new LinkedList<>();
+	private Collection<E> creates = new LinkedList<>();
 
 	/**
 	 * 当前的泛型的类型
@@ -64,7 +64,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
 	 * @return
 	 */
 	@Override
-	public JSTableModelLinster<List<E>> getTableModelLinster() {
+	public JSTableModelLinster<Collection<E>> getTableModelLinster() {
 
 		if (super.getTableModelLinster() == null)
 			this.setTableModelLinster(new JSTableModelDefaultAdapter<E>());
@@ -84,7 +84,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> getOrginal() {
+	public Collection<E> getOrginal() {
 		return orginal;
 	}
 
@@ -92,7 +92,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setOrginal(List<E> orginal) {
+	public void setOrginal(Collection<E> orginal) {
 		this.orginal = orginal;
 	}
 
@@ -100,7 +100,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> getDeletes() {
+	public Collection<E> getDeletes() {
 		return this.deletes;
 	}
 
@@ -108,7 +108,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setDeletes(List<E> deletes) {
+	public void setDeletes(Collection<E> deletes) {
 		this.deletes = deletes;
 	}
 
@@ -116,7 +116,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> getCreates() {
+	public Collection<E> getCreates() {
 		return this.creates;
 	}
 
@@ -124,7 +124,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setCreates(List<E> creates) {
+	public void setCreates(Collection<E> creates) {
 		this.creates = creates;
 	}
 
@@ -132,7 +132,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public List<E> getModified() {
+	public Collection<E> getModified() {
 		return this.modifies;
 	}
 
@@ -140,7 +140,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void setModified(List<E> modified) {
+	public void setModified(Collection<E> modified) {
 		this.modifies = modified;
 	}
 
@@ -192,8 +192,8 @@ public class JSTableDefaultModel<E> extends JSTableModel<List<E>> {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<E> getDatas() throws Exception {
-		List<E> result = new LinkedList<>();
+	public Collection<E> getDatas() throws Exception {
+		Collection<E> result = new LinkedList<>();
 
 		int iOriginal = this.findColumn(JSTableColumn.COLUMN_ORIGINAL);
 		if (iOriginal < 0)
