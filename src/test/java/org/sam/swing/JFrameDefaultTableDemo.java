@@ -2,6 +2,7 @@ package org.sam.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.SimpleDateFormat;
@@ -17,8 +18,10 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
 import javax.swing.JToolBar;
@@ -37,7 +40,7 @@ import org.sam.swing.table.defaultImpl.JSTableModelDefaultAdapter;
 import org.sam.swing.table.editor.JSTableCheckboxEditor;
 import org.sam.swing.table.editor.JSTableColorEditor;
 import org.sam.swing.table.editor.JSTableFontEditor;
-import org.sam.swing.table.editor.JSTableImageButtonEditor;
+import org.sam.swing.table.editor.JSTableMenuButtonEditor;
 import org.sam.swing.table.editor.JSTableRadioButtonGroupEditor;
 import org.sam.swing.table.editor.JSTableSpinnerEditor;
 import org.sam.swing.table.renderer.JSTableCheckboxRenderer;
@@ -221,7 +224,7 @@ public class JFrameDefaultTableDemo extends JFrame {
 		col9.setMaxWidth(125);
 		col9.setDefaultValue("");
 		col9.setCellEditor(new JSTableFontEditor());
-		
+
 		JSTableColumn col10 = new JSTableColumn();
 		col10.setIdentifier("");
 		col10.setTitle("图片按钮");
@@ -230,22 +233,27 @@ public class JFrameDefaultTableDemo extends JFrame {
 		col10.setWidth(35);
 		col10.setMaxWidth(35);
 		col10.setDefaultValue(null);
-		JButton btn = new JButton(new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_EXPORT)));
-		col10.setCellRenderer(new JSTableImageButtonRenderer(new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_EXPORT))));
-		col10.setCellEditor(new JSTableImageButtonEditor(btn));
-		btn.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int row = table.convertRowIndexToModel(table.getSelectedRow()) ;
-				int col = table.convertColumnIndexToModel(table.getSelectedColumn());
-				JOptionPane.showMessageDialog(null, "row:" + row + ";col:" + col + ";value:" + tableModel.getValueAt(row, col));
-			}
-		});
+		// JButton btn = new JButton(new
+		// ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_EXPORT)));
+		col10.setCellRenderer(new JSTableImageButtonRenderer());
+		JPopupMenu menu = createMenu();
+		JSTableMenuButtonEditor jsTableMenuButtonEditor = new JSTableMenuButtonEditor(menu);
+		col10.setCellEditor(jsTableMenuButtonEditor);
+		// btn.addActionListener(new ActionListener() {
+		//
+		// @Override
+		// public void actionPerformed(ActionEvent e) {
+		// int row = table.convertRowIndexToModel(table.getSelectedRow());
+		// int col = table.convertColumnIndexToModel(table.getSelectedColumn());
+		// JOptionPane.showMessageDialog(null,
+		// "row:" + row + ";col:" + col + ";value:" + tableModel.getValueAt(row,
+		// col));
+		// }
+		// });
 
 		try {
-			JSTableBuilder<Collection<TestEntity>> builder = new JSTableDefaultBuilderImpl<>(TestEntity.class, col0, col1,
-					col2, col3, col4, col5, col6, col7, col8,col9,col10);
+			JSTableBuilder<Collection<TestEntity>> builder = new JSTableDefaultBuilderImpl<>(TestEntity.class, col0,
+					col1, col2, col3, col4, col5, col6, col7, col8, col9, col10);
 			colModel = builder.buildTableColumnModel();
 			tableModel = builder.buildTableModel();
 			table = new JSTable(tableModel, colModel);
@@ -315,7 +323,7 @@ public class JFrameDefaultTableDemo extends JFrame {
 			}
 		});
 		toolBar.add(btnEditor);
-		
+
 		JButton btnAdd = new JButton("新增", new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_NEW)));
 		btnAdd.addActionListener(new ActionListener() {
 			@Override
@@ -355,9 +363,20 @@ public class JFrameDefaultTableDemo extends JFrame {
 			}
 		});
 		toolBar.add(btnSave);
+	}
 
-		JSColorComboBox cbColor = new JSColorComboBox();
-		toolBar.add(cbColor);
+	/**
+	 * 生成操作菜单
+	 * 
+	 * @return
+	 */
+	public JPopupMenu createMenu() {
+
+		JPopupMenu menu = new JPopupMenu();
+		JMenuItem item1 = new JMenuItem("样式设置");
+		menu.add(item1);
+
+		return menu;
 	}
 
 }

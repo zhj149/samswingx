@@ -2,16 +2,19 @@ package org.sam.swing.table.editor;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JPopupMenu;
 import javax.swing.JTable;
 import javax.swing.JTree;
 import javax.swing.table.TableCellEditor;
 import javax.swing.tree.TreeCellEditor;
+
+import org.sam.swing.resource.ResourceLoader;
 
 /**
  * 图片按钮编辑器
@@ -20,7 +23,7 @@ import javax.swing.tree.TreeCellEditor;
  * @author sam
  *
  */
-public class JSTableImageButtonEditor extends AbstractCellEditor implements TableCellEditor, TreeCellEditor {
+public class JSTableMenuButtonEditor extends AbstractCellEditor implements TableCellEditor, TreeCellEditor {
 
 	private static final long serialVersionUID = -1287059888797387629L;
 
@@ -34,26 +37,63 @@ public class JSTableImageButtonEditor extends AbstractCellEditor implements Tabl
 	 */
 	protected JButton editorComponent;
 	
-	protected ActionListener actionLinster;
+	/**
+	 * 当前操作的menu对象
+	 */
+	protected JPopupMenu menu;
+
+	/**
+	 * 当前操作的menu对象
+	 * @return
+	 */
+	public JPopupMenu getMenu() {
+		return menu;
+	}
+
+	/**
+	 * 当前操作的menu对象
+	 * @param menu
+	 */
+	public void setMenu(JPopupMenu menu) {
+		this.menu = menu;
+	}
+
+	/**
+	 * 当前的封装对象
+	 * @return
+	 */
+	public EditorDelegate getDelegate() {
+		return delegate;
+	}
 
 	/**
 	 * 带有初始化控件对象的操作
 	 * 
 	 * @param editor
 	 */
-	public JSTableImageButtonEditor(JButton editor) {
+	public JSTableMenuButtonEditor(JButton editor) {
 		this.editorComponent = editor;
 		delegate = new EditorDelegate();
 		delegate.setClickCountToStart(1);
 
 		editorComponent.addActionListener(delegate);
+		
 	}
 
 	/**
 	 * 不带参数的默认构造函数
 	 */
-	public JSTableImageButtonEditor(Icon icon) {
+	public JSTableMenuButtonEditor(Icon icon) {
 		this(new JButton(icon));
+	}
+	
+	/**
+	 * 使用默认的下拉箭头图标
+	 * @param menu
+	 */
+	public JSTableMenuButtonEditor(JPopupMenu menu) {
+		this(new JButton(new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_DOWN_ARROW))));
+		this.setMenu(menu);
 	}
 
 	/**
@@ -73,6 +113,7 @@ public class JSTableImageButtonEditor extends AbstractCellEditor implements Tabl
 		
 		String stringValue = tree.convertValueToText(value, isSelected, expanded, leaf, row, false);
 		
+		delegate.setRow(row);
 		delegate.setValue(stringValue);
 		return editorComponent;
 	}
@@ -89,6 +130,8 @@ public class JSTableImageButtonEditor extends AbstractCellEditor implements Tabl
 			editorComponent.setBackground(table.getBackground());
 		}
 		
+		delegate.setColumn(column);
+		delegate.setRow(row);
 		delegate.setValue(value);
 		return editorComponent;
 	}
@@ -138,7 +181,9 @@ public class JSTableImageButtonEditor extends AbstractCellEditor implements Tabl
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JSTableImageButtonEditor.this.stopCellEditing();
+			if (menu != null)
+				menu.show(editorComponent, editorComponent.getWidth() / 2 , editorComponent.getHeight());
+			JSTableMenuButtonEditor.this.stopCellEditing();
 		}
 
 		/**
@@ -150,7 +195,7 @@ public class JSTableImageButtonEditor extends AbstractCellEditor implements Tabl
 		 */
 		@Override
 		public void itemStateChanged(ItemEvent e) {
-			JSTableImageButtonEditor.this.stopCellEditing();
+			JSTableMenuButtonEditor.this.stopCellEditing();
 		}
 	}
 }

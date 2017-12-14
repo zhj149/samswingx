@@ -4,9 +4,12 @@ import java.awt.Component;
 import java.io.Serializable;
 
 import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
+
+import org.sam.swing.resource.ResourceLoader;
 
 /**
  * 图片按钮渲染器
@@ -24,6 +27,13 @@ public class JSTableImageButtonRenderer extends JLabel implements TableCellRende
 	public JSTableImageButtonRenderer(Icon icon) {
 		super(icon);
 		this.setOpaque(true);
+	}
+	
+	/**
+	 * 各个默认的先下箭头图标
+	 */
+	public JSTableImageButtonRenderer() {
+		this(new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_DOWN_ARROW)));
 	}
 
 	/**
