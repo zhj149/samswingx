@@ -1,6 +1,7 @@
 package org.sam.swing.table.defaultImpl;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.LinkedList;
 
@@ -10,6 +11,7 @@ import org.apache.commons.lang3.NotImplementedException;
 import org.sam.swing.table.JSTableColumn;
 import org.sam.swing.table.JSTableModel;
 import org.sam.swing.table.JSTableModelLinster;
+import org.sam.swing.utils.Pair;
 
 /**
  * 默认的实体类型的数据操作对象
@@ -263,21 +265,26 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 
 			} else if (originalCol == i) {
 				datas[originalCol] = entity;
-			} else // 有数据绑定列
-			{
-				Field field = this.getCls().getDeclaredField(colName);
-				if (field == null)
-					continue;
+			} else {
+				// 有数据绑定列
 
-				field.setAccessible(true);
+				// 先判断get函数，没有get函数，才访问成员
+				Method method = this.getCls()
+						.getMethod("set" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
 
-				if (null == column.getDefaultValue()) {
-					datas[findColumn] = null;
-					field.set(entity, null);
+				if (method != null) {
+					datas[findColumn] = column.getDefaultValue();
+					method.invoke(entity, datas[findColumn]);
 				} else {
+					Field field = this.getCls().getDeclaredField(colName);
+					if (field == null)
+						continue;
+					field.setAccessible(true);
+
 					datas[findColumn] = column.getDefaultValue();
 					field.set(entity, datas[findColumn]);
 				}
+
 			}
 		}
 
@@ -293,7 +300,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 		for (int i = this.getRowCount() - 1; i >= 0; i--) {
 			this.removeRow(i);
 		}
-		
+
 		this.resetUpdate();
 
 		if (this.orginal != null)
@@ -321,9 +328,19 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 					if (null == colName || colName.length() <= 0) {
 						datas[i] = null;
 					} else {
-						Field field = getCls().getDeclaredField(colName);
-						field.setAccessible(true);
-						datas[i] = field.get(e);
+
+						Pair<Boolean, Object> result = invokeGetMethod(e,colName);
+
+						if (result.getKey()) {
+							datas[i] = result.getValue();
+						} else {
+							Field field = this.getCls().getDeclaredField(colName);
+							if (field == null)
+								continue;
+							field.setAccessible(true);
+							datas[i] = field.get(e);
+						}
+
 					}
 				}
 			}
@@ -331,7 +348,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 
 		addRow(datas);
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -339,7 +356,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 	public void replace(int row, Object t) throws Exception {
 		throw new NotImplementedException("there is nothing");
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -368,13 +385,22 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 				if (colName == null || colName.length() <= 0)
 					return;
 
-				Field field = getCls().getDeclaredField(colName);
-				field.setAccessible(true);
 				JSTableColumn[] columns = this.getTableColumns();
 				int iFind = this.findColumn(colName);
 				JSTableColumn curColumn = columns[iFind];
-				field.set(entity, this.getTableModelLinster().getDataTranstor(curColumn,
-						this.getValueAt(e.getFirstRow(), e.getColumn()), field.getType()));
+				
+				Method method = this.getCls()
+						.getMethod("set" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+
+				if (method != null) {
+					method.invoke(entity, this.getTableModelLinster().getDataTranstor(curColumn,
+							this.getValueAt(e.getFirstRow(), e.getColumn()), method.getReturnType()));
+				} else {
+					Field field = getCls().getDeclaredField(colName);
+					field.setAccessible(true);
+					field.set(entity, this.getTableModelLinster().getDataTranstor(curColumn,
+							this.getValueAt(e.getFirstRow(), e.getColumn()), field.getType()));
+				}
 
 				if (this.creates.contains(entity)) {
 					// 如果新增行包含数据
@@ -426,9 +452,17 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 							if (null == colName || colName.length() <= 0) {
 								datas[i] = null;
 							} else {
-								Field field = getCls().getDeclaredField(colName);
-								field.setAccessible(true);
-								datas[i] = field.get(entity);
+								Pair<Boolean, Object> result = invokeGetMethod(entity,colName);
+
+								if (result.getKey()) {
+									datas[i] = result.getValue();
+								} else {
+									Field field = this.getCls().getDeclaredField(colName);
+									if (field == null)
+										continue;
+									field.setAccessible(true);
+									datas[i] = field.get(entity);
+								}
 							}
 						}
 					}
@@ -500,5 +534,33 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 		this.addRow(datas);
 
 		return true;
+	}
+
+	/**
+	 * 执行get method
+	 * 
+	 * @param entity
+	 * @param colName
+	 * @return
+	 */
+	private Pair<Boolean, Object> invokeGetMethod(Object entity, String colName) {
+
+		try {
+			// 先判断get函数，没有get函数，执行is函数
+			Method method = this.getCls()
+					.getMethod("get" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+
+			if (method == null) {
+				method = this.getCls().getMethod("Is" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+			}
+			if (method != null) {
+				return new Pair<Boolean, Object>(true, method.invoke(entity));
+			}
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return new Pair<Boolean, Object>(false, null);
 	}
 }
