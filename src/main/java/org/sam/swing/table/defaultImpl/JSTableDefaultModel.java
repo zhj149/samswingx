@@ -269,8 +269,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 				// 有数据绑定列
 
 				// 先判断get函数，没有get函数，才访问成员
-				Method method = this.getCls()
-						.getMethod("set" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+				Method method = this.getSetMethod(entity, colName);
 
 				if (method != null) {
 					datas[findColumn] = column.getDefaultValue();
@@ -329,7 +328,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 						datas[i] = null;
 					} else {
 
-						Pair<Boolean, Object> result = invokeGetMethod(e,colName);
+						Pair<Boolean, Object> result = invokeGetMethod(e, colName);
 
 						if (result.getKey()) {
 							datas[i] = result.getValue();
@@ -388,9 +387,8 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 				JSTableColumn[] columns = this.getTableColumns();
 				int iFind = this.findColumn(colName);
 				JSTableColumn curColumn = columns[iFind];
-				
-				Method method = this.getCls()
-						.getMethod("set" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+
+				Method method = getSetMethod(entity,colName);
 
 				if (method != null) {
 					method.invoke(entity, this.getTableModelLinster().getDataTranstor(curColumn,
@@ -452,7 +450,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 							if (null == colName || colName.length() <= 0) {
 								datas[i] = null;
 							} else {
-								Pair<Boolean, Object> result = invokeGetMethod(entity,colName);
+								Pair<Boolean, Object> result = invokeGetMethod(entity, colName);
 
 								if (result.getKey()) {
 									datas[i] = result.getValue();
@@ -547,8 +545,13 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 
 		try {
 			// 先判断get函数，没有get函数，执行is函数
-			Method method = this.getCls()
-					.getMethod("get" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+			// 先判断get函数，没有get函数，执行is函数
+			Method method = null;
+			try {
+				method = this.getCls().getMethod("get" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+			} catch (Exception ex) {
+				method = null;
+			}
 
 			if (method == null) {
 				method = this.getCls().getMethod("Is" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
@@ -562,5 +565,37 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 		}
 
 		return new Pair<Boolean, Object>(false, null);
+	}
+
+	/**
+	 * 获取set method执行函数
+	 * 
+	 * @param entity
+	 * @param colName
+	 * @return
+	 */
+	private Method getSetMethod(Object entity, String colName) {
+
+		try {
+			Method method = null;
+			// 先判断get函数，没有get函数，执行is函数
+			try {
+				method = this.getCls().getMethod("get" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+			} catch (Exception ex) {
+				method = null;
+			}
+
+			if (method == null) {
+				method = this.getCls().getMethod("Is" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+			}
+
+			return this.getCls().getMethod("set" + colName.substring(0, 1).toUpperCase() + colName.substring(1),
+					method.getReturnType());
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
 	}
 }
