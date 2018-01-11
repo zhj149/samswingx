@@ -394,7 +394,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 					method.invoke(entity, this.getTableModelLinster().getDataTranstor(curColumn,
 							this.getValueAt(e.getFirstRow(), e.getColumn()), method.getReturnType()));
 				} else {
-					Field field = getCls().getDeclaredField(colName);
+					Field field = this.getCls().getDeclaredField(colName);
 					field.setAccessible(true);
 					field.set(entity, this.getTableModelLinster().getDataTranstor(curColumn,
 							this.getValueAt(e.getFirstRow(), e.getColumn()), field.getType()));
@@ -554,7 +554,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 			}
 
 			if (method == null) {
-				method = this.getCls().getMethod("Is" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+				method = this.getCls().getMethod("is" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
 			}
 			if (method != null) {
 				return new Pair<Boolean, Object>(true, method.invoke(entity));
@@ -586,7 +586,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 			}
 
 			if (method == null) {
-				method = this.getCls().getMethod("Is" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+				method = this.getCls().getMethod("is" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
 			}
 
 			return this.getCls().getMethod("set" + colName.substring(0, 1).toUpperCase() + colName.substring(1),

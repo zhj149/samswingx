@@ -2,9 +2,10 @@ package org.sam.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.LinkedHashMap;
@@ -43,6 +44,7 @@ import org.sam.swing.table.editor.JSTableFontEditor;
 import org.sam.swing.table.editor.JSTableMenuButtonEditor;
 import org.sam.swing.table.editor.JSTableRadioButtonGroupEditor;
 import org.sam.swing.table.editor.JSTableSpinnerEditor;
+import org.sam.swing.table.header.JSTableHeaderCheckboxRenderer;
 import org.sam.swing.table.renderer.JSTableCheckboxRenderer;
 import org.sam.swing.table.renderer.JSTableColorRenderer;
 import org.sam.swing.table.renderer.JSTableFormatRenderer;
@@ -202,6 +204,21 @@ public class JFrameDefaultTableDemo extends JFrame {
 		JCheckBox jCheckBox = new JCheckBox();
 		jCheckBox.setHorizontalAlignment(JCheckBox.CENTER);
 		col7.setCellEditor(new JSTableCheckboxEditor(jCheckBox));
+		jsTableCheckboxRenderer.setEnabled(true);
+		JSTableHeaderCheckboxRenderer headerChx = new JSTableHeaderCheckboxRenderer();
+		col7.setSortable(false);
+		col7.setHeaderRenderer(headerChx);
+		headerChx.addMouseListener(new MouseAdapter() {
+						
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int rowCount = tableModel.getRowCount();
+				for( int i = 0 ; i < rowCount ; i++){
+					tableModel.setValueAt(headerChx.isSelected(), i, col7.getModelIndex());
+				}
+			}
+		});
 
 		// 颜色选择控件
 		JSTableColumn col8 = new JSTableColumn();

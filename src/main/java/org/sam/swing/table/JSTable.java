@@ -22,6 +22,7 @@ import javax.swing.table.TableModel;
 import org.jdesktop.swingx.JXTable;
 import org.jdesktop.swingx.decorator.HighlighterFactory;
 import org.jdesktop.swingx.search.Searchable;
+import org.sam.swing.table.header.JSTableHeader;
 
 /**
  * 自定义的table对象
@@ -225,18 +226,20 @@ public class JSTable extends JXTable implements KeyListener {
 		this.addKeyListener(this);
 		this.setAutoscrolls(true);
 		this.setAutoResizeMode(JXTable.AUTO_RESIZE_OFF);
-		this.setSortable(false);
+		this.setSortable(true);
 		this.setRowHeight(20);
 		this.setColumnControlVisible(true);
 		this.setShowGrid(true, true);
 		this.addHighlighter(HighlighterFactory.createSimpleStriping(Color.LIGHT_GRAY));
 
+		//设置表头对象
+		this.setTableHeader(new JSTableHeader(this.getColumnModel()));
 		TableCellRenderer headerRenerder = this.getTableHeader().getDefaultRenderer();
 		if (headerRenerder instanceof DefaultTableCellRenderer) {
 			DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) headerRenerder;
 			renderer.setHorizontalAlignment(JLabel.CENTER);
 		}
-
+		
 		if (this.getModel() instanceof JSTableModel) {
 			JSTableModel<?> module = (JSTableModel<?>) this.getModel();
 			if (module != null)
