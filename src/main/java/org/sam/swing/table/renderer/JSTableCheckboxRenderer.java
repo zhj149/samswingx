@@ -19,6 +19,13 @@ public class JSTableCheckboxRenderer extends JCheckBox implements TableCellRende
 	 * 
 	 */
 	private static final long serialVersionUID = -5916141000327482269L;
+	
+	/**
+	 * 设置默认为居中
+	 */
+	public JSTableCheckboxRenderer(){
+		this.setHorizontalAlignment(JCheckBox.CENTER);
+	}
 
 	/**
 	 * 

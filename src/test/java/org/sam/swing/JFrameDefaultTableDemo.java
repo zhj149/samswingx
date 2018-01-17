@@ -214,9 +214,11 @@ public class JFrameDefaultTableDemo extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				
 				int rowCount = tableModel.getRowCount();
+				boolean selected = !headerChx.isSelected();
 				for( int i = 0 ; i < rowCount ; i++){
-					tableModel.setValueAt(headerChx.isSelected(), i, col7.getModelIndex());
+					tableModel.setValueAt(selected, i, col7.getModelIndex());
 				}
+				headerChx.setSelected(selected);
 			}
 		});
 
@@ -380,6 +382,20 @@ public class JFrameDefaultTableDemo extends JFrame {
 			}
 		});
 		toolBar.add(btnSave);
+		
+		JButton btnInsert = new JButton("插入", new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_ADD_SMALL)));
+		btnInsert.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					tableModel.insert(0, new TestEntity());
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					JOptionPane.showMessageDialog(null, "保存失败\r\n出错信息为：\r\n" + ex.getMessage());
+				}
+			}
+		});
+		toolBar.add(btnInsert);
 	}
 
 	/**

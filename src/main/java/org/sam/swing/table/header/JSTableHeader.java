@@ -94,7 +94,6 @@ public class JSTableHeader extends JXTableHeader {
 		 * Packs column on double click in resize region. Resorts column on
 		 * double click if enabled and not in resize region.
 		 */
-		@SuppressWarnings("deprecation")
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			if (shouldIgnore(e)) {

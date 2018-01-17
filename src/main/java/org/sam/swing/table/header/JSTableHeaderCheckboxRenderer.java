@@ -21,15 +21,15 @@ public class JSTableHeaderCheckboxRenderer extends JCheckBox implements TableCel
 	 * 
 	 */
 	private static final long serialVersionUID = -5916141000327482269L;
-	
+
 	/**
 	 * 表头带有选择框的控件
 	 */
-	public JSTableHeaderCheckboxRenderer(){
+	public JSTableHeaderCheckboxRenderer() {
 		super();
 		this.setHorizontalAlignment(JSTableHeaderCheckboxRenderer.CENTER);
 		this.addMouseListener(new MouseAdapter() {
-			
+
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				JSTableHeaderCheckboxRenderer.this.setSelected(!JSTableHeaderCheckboxRenderer.this.isSelected());

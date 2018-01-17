@@ -360,6 +360,23 @@ public abstract class JSTableModel<T> extends DefaultTableModel implements Table
 	 * @throws Exception
 	 */
 	public abstract Object[] createNew() throws Exception;
+	
+	/**
+	 * 根据实体对象
+	 * @param data 查找数据所在的索引位置
+	 * @return
+	 * @throws Exception
+	 */
+	public int findIndexOf(Object data) throws Exception{
+		int rowCount = this.getRowCount();
+		for( int i = 0 ; i < rowCount; i++){
+			if (this.getData(i) == data)
+				return i;
+		}
+		
+		return -1;
+	}
+	
 
 	/**
 	 * 清空所有当前显示数据 并且清空所有缓冲区

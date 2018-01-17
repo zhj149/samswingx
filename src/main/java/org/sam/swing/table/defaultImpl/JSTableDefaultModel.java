@@ -31,7 +31,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 	private Collection<E> orginal;
 
 	/**
-	 * 删除的对象集合
+	 * 删除的对象集合o
 	 */
 	private Collection<E> deletes = new LinkedList<>();
 
@@ -345,7 +345,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 			}
 		}
 
-		addRow(datas);
+		this.insertRow(row, datas);
 	}
 
 	/**
@@ -486,6 +486,9 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 		int findColumn = this.findColumn(JSTableColumn.COLUMN_ORIGINAL);
 		if (findColumn < 0)
 			return false;
+		
+		if (moduleRow < 0 )
+			return true;
 
 		Object entity = this.getValueAt(moduleRow, findColumn);
 		if (entity == null)
