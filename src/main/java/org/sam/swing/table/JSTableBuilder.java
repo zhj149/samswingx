@@ -51,7 +51,13 @@ public interface JSTableBuilder<E> {
 	 * @throws Exception
 	 */
 	public default JSTable buildTable() throws Exception{
-		return this.buildTable(this.getTableModel(), this.getTableColumnModel());
+		
+		JSTableModel<E> tableModel = this.getTableModel();
+		JSTableColumnModel tableColumnModel = this.getTableColumnModel();
+		JSTable table = this.buildTable(tableModel, tableColumnModel);
+		JSTableModelLinster<E> modelAdapter = this.buildModelLinster();
+		tableModel.setTableModelLinster(modelAdapter);
+		return table;
 	}
 	
 	/**

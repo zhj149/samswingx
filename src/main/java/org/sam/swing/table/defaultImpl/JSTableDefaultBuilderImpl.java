@@ -10,6 +10,7 @@ import org.sam.swing.table.JSTableModelLinster;
 
 /**
  * 默认的tablemodel和columnmodel实现
+ * 
  * @author sam
  *
  * @param <E>
@@ -18,16 +19,17 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<Collection<E
 
 	/**
 	 * 当前的column列表
-	 */	
+	 */
 	private JSTableColumn[] columns;
-	
+
 	/**
 	 * 当前的类型
 	 */
 	private Class<E> cls;
-	
+
 	/**
 	 * 当前操作的column列表
+	 * 
 	 * @return
 	 */
 	public JSTableColumn[] getColumns() {
@@ -36,32 +38,33 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<Collection<E
 
 	/**
 	 * 当前操作的column列表
+	 * 
 	 * @param columns
 	 */
 	public void setColumns(JSTableColumn[] columns) {
 		this.columns = columns;
 	}
-	
+
 	/**
 	 * 缓存的colmodel对象
 	 */
 	private JSTableColumnModel colModel;
-	
+
 	/**
-	 *  缓存的tablemodel对象
+	 * 缓存的tablemodel对象
 	 */
 	private JSTableModel<Collection<E>> tableModel;
 
 	/**
 	 * 带有列信息的构造函数
+	 * 
 	 * @param cols
 	 */
-	public JSTableDefaultBuilderImpl(Class<E> cls,JSTableColumn... cols)
-	{
+	public JSTableDefaultBuilderImpl(Class<E> cls, JSTableColumn... cols) {
 		this.columns = cols;
 		this.cls = cls;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
@@ -74,14 +77,13 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<Collection<E
 
 		int i = 0;
 		for (JSTableColumn col : this.columns) {
-			if (col.getModelIndex() < 0)
-			{
+			if (col.getModelIndex() < 0) {
 				col.setModelIndex(i);
 			}
 			colModel.addColumn(col);
 			i++;
 		}
-		
+
 		this.colModel = colModel;
 
 		return colModel;
@@ -108,16 +110,17 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<Collection<E
 			column.setHeaderValue(JSTableColumn.COLUMN_ORIGINAL);
 			tabModel.addColumn(column);
 		}
-		
+
 		this.tableModel = tabModel;
 
 		return tabModel;
 	}
-	
+
 	/**
 	 * {@inheritDoc}
 	 */
-	public JSTableModelLinster<Collection<E>> buildModelLinster(JSTableModel<Collection<E>> tableModel) throws Exception{
+	public JSTableModelLinster<Collection<E>> buildModelLinster(JSTableModel<Collection<E>> tableModel)
+			throws Exception {
 		JSTableModelLinster<Collection<E>> adapter = new JSTableModelDefaultAdapter<>();
 		tableModel.setTableModelLinster(adapter);
 		return adapter;
@@ -130,7 +133,7 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<Collection<E
 	public JSTableModel<Collection<E>> getTableModel() throws Exception {
 		if (this.tableModel == null)
 			this.tableModel = buildTableModel();
-		
+
 		return this.tableModel;
 	}
 
@@ -141,7 +144,7 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<Collection<E
 	public JSTableColumnModel getTableColumnModel() throws Exception {
 		if (this.colModel == null)
 			this.colModel = buildTableColumnModel();
-		
+
 		return this.colModel;
 	}
 }

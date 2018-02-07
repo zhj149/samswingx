@@ -2,8 +2,6 @@ package org.sam.swing;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -14,23 +12,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.DefaultCellEditor;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
 import javax.swing.JSpinner;
-import javax.swing.JToolBar;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.table.DefaultTableCellRenderer;
 
 import org.jdesktop.swingx.table.DatePickerCellEditor;
-import org.sam.swing.resource.ResourceLoader;
 import org.sam.swing.table.JSTable;
 import org.sam.swing.table.JSTableBuilder;
 import org.sam.swing.table.JSTableColumn;
@@ -51,6 +44,7 @@ import org.sam.swing.table.renderer.JSTableFormatRenderer;
 import org.sam.swing.table.renderer.JSTableImageButtonRenderer;
 import org.sam.swing.table.renderer.JSTableRadioButtonGroupRenderer;
 import org.sam.swing.table.renderer.JSTableRowNumberRenderer;
+import org.sam.swing.table.tools.JSTableToolBar;
 
 /**
  * table表格方法
@@ -313,89 +307,15 @@ public class JFrameDefaultTableDemo extends JFrame {
 
 		// 加个工具条
 		// 以下是测试表格显示风格的操作
-		JToolBar toolBar = new JToolBar();
-		add(toolBar, BorderLayout.NORTH);
-
-		JButton btnRefresh = new JButton("刷新",
-				new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_RETRIEVE)));
-		btnRefresh.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					tableModel.retrieve();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
-		toolBar.add(btnRefresh);
-
-		JButton btnEditor = new JButton("编辑", new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_MODIFY)));
-		btnEditor.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					table.readOnly();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
-		toolBar.add(btnEditor);
-
-		JButton btnAdd = new JButton("新增", new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_NEW)));
-		btnAdd.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					table.append();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
-		toolBar.add(btnAdd);
-
-		JButton btnDel = new JButton("删除", new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_DELETE)));
-		btnDel.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					table.delete();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
-		toolBar.add(btnDel);
-
-		JButton btnSave = new JButton("保存", new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_SAVE)));
-		btnSave.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					table.update();
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					JOptionPane.showMessageDialog(null, "保存失败\r\n出错信息为：\r\n" + ex.getMessage());
-				}
-			}
-		});
-		toolBar.add(btnSave);
-		
-		JButton btnInsert = new JButton("插入", new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_ADD_SMALL)));
-		btnInsert.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				try {
-					tableModel.insert(0, new TestEntity());
-				} catch (Exception ex) {
-					ex.printStackTrace();
-					JOptionPane.showMessageDialog(null, "保存失败\r\n出错信息为：\r\n" + ex.getMessage());
-				}
-			}
-		});
-		toolBar.add(btnInsert);
+		JSTableToolBar toolBar = new JSTableToolBar(table);
+		toolBar.enableRetrieve();
+		toolBar.enableSelect(7);
+		toolBar.enableEdit();
+		toolBar.enableAdd();
+		toolBar.enableDel();
+		toolBar.enableSave();
+		toolBar.enableSearch();
+		this.add(toolBar,BorderLayout.NORTH);
 	}
 
 	/**

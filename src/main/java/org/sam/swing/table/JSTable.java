@@ -122,94 +122,6 @@ public class JSTable extends JXTable implements KeyListener {
 	}
 
 	/**
-	 * 删除一行数据的操作
-	 * 
-	 * @return
-	 * @throws Exception
-	 */
-	public void delete() throws Exception {
-		int selectedRowCount = this.getSelectedRowCount();
-		if (selectedRowCount <= 0) {
-			JOptionPane.showMessageDialog(null, "请选择您要删除的数据行");
-			return;
-		} else if (selectedRowCount == 1) {
-			int iRow = this.getSelectedRow();
-			((JSTableModel<?>) this.getModel()).delete(this.convertRowIndexToModel(iRow));
-		} else {
-			// > 1的情况
-			int confim = JOptionPane.showConfirmDialog(null, "您将删除【" + selectedRowCount + "】行数据，是否删除?");
-			if (confim == JOptionPane.OK_OPTION) {
-				int[] selectedRows = this.getSelectedRows();
-				for (int i = selectedRowCount - 1; i >= 0; i--) {
-					JSTableModel<?> model = (JSTableModel<?>) this.getModel();
-					model.delete(this.convertRowIndexToModel(selectedRows[i]));
-				}
-			}
-		}
-	}
-
-	/**
-	 * 新增一行的操作
-	 * 
-	 * @return 返回新增数据行号
-	 * @throws Exception
-	 */
-	public int append() throws Exception {
-		JSTableModel<?> module = (JSTableModel<?>) this.getModel();
-		module.append();
-		this.scrollRowToVisible(module.getRowCount() - 1);
-		if (!module.getEditable()) {
-			module.setEditable(true);
-		}
-		int iRow = module.getRowCount() - 1;
-		this.changeSelection(iRow, 0, false, false);
-		this.setEditingRow(iRow);
-		this.editCellAt(iRow, 0);
-
-		return iRow;
-	}
-
-	/**
-	 * 在第几行的位置插入数据
-	 * 
-	 * @param index
-	 *            行索引
-	 * @return
-	 * @throws Exception
-	 */
-	public int insert(int index) throws Exception {
-		JSTableModel<?> module = (JSTableModel<?>) this.getModel();
-		module.insert(index);
-		this.scrollRowToVisible(index);
-		if (!module.getEditable()) {
-			module.setEditable(true);
-		}
-		int iRow = index;
-		this.changeSelection(iRow, 0, false, false);
-		this.setEditingRow(iRow);
-		this.editCellAt(iRow, 0);
-
-		return iRow;
-	}
-
-	/**
-	 * 保存操作
-	 * 
-	 * @throws Exception
-	 */
-	public void update() throws Exception {
-		JSTableModel<?> module = (JSTableModel<?>) this.getModel();
-
-		if (module.update()) {
-			JOptionPane.showMessageDialog(null, "保存成功");
-		} else {
-			JOptionPane.showMessageDialog(null, "保存失败");
-		}
-
-		module.setEditable(false);
-	}
-
-	/**
 	 * 设置窗口可编辑状态
 	 * 
 	 * @throws Exception
@@ -273,15 +185,11 @@ public class JSTable extends JXTable implements KeyListener {
 	 */
 	@Override
 	public Searchable getSearchable() {
-		// TODO Auto-generated method stub
 		return super.getSearchable();
 	}
 	
-	// begin keyevent
-
 	@Override
 	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
 	}
 
 	/**
@@ -360,5 +268,4 @@ public class JSTable extends JXTable implements KeyListener {
 		this.setValueAt(data, row, column);
 	}
 
-	// end
 }

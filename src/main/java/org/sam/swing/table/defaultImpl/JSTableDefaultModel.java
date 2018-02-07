@@ -389,10 +389,11 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 				JSTableColumn curColumn = columns[iFind];
 
 				Method method = getSetMethod(entity,colName);
+				Method getMethod = getMethod(entity,colName);
 
 				if (method != null) {
 					method.invoke(entity, this.getTableModelLinster().getDataTranstor(curColumn,
-							this.getValueAt(e.getFirstRow(), e.getColumn()), method.getReturnType()));
+							this.getValueAt(e.getFirstRow(), e.getColumn()), getMethod.getReturnType()));
 				} else {
 					Field field = this.getCls().getDeclaredField(colName);
 					field.setAccessible(true);
@@ -568,6 +569,37 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 		}
 
 		return new Pair<Boolean, Object>(false, null);
+	}
+	
+	/**
+	 * 获取set method执行函数
+	 * 
+	 * @param entity
+	 * @param colName
+	 * @return
+	 */
+	private Method getMethod(Object entity, String colName) {
+
+		try {
+			Method method = null;
+			// 先判断get函数，没有get函数，执行is函数
+			try {
+				method = this.getCls().getMethod("get" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+			} catch (Exception ex) {
+				method = null;
+			}
+
+			if (method == null) {
+				method = this.getCls().getMethod("is" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
+			}
+
+			return method;
+
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+		return null;
 	}
 
 	/**
