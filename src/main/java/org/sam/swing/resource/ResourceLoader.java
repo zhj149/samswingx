@@ -103,7 +103,7 @@ public class ResourceLoader {
 	/**
 	 * 修改按钮
 	 */
-	public static final String IMAGE_MODIFY = "modify.png";
+	public static final String IMAGE_MODIFY = "pencil.png";
 
 	/**
 	 * 删除按钮
@@ -163,7 +163,7 @@ public class ResourceLoader {
 	/**
 	 * 向下的箭头
 	 */
-	public static final String IMAGE_DOWN_ARROW = "dddw.gif";
+	public static final String IMAGE_DOWN_ARROW = "down.png";
 
 	// end
 

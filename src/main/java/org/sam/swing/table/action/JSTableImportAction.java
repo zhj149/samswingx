@@ -23,7 +23,7 @@ public class JSTableImportAction extends JSTableBaseAction {
 
 	public JSTableImportAction(JXTable table) {
 		super(table);
-		this.putValue(AbstractAction.NAME, "");
+		this.putValue(AbstractAction.NAME, "导入");
 		this.putValue(AbstractAction.SMALL_ICON,
 				new ImageIcon(ResourceLoader.getResource(ResourceLoader.IMAGE_IMPORT)));
 		this.putValue(SHORT_DESCRIPTION, "导入数据数据");
