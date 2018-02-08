@@ -23,6 +23,7 @@ import javax.swing.tree.TreeCellEditor;
 
 import org.sam.swing.table.action.JSTableChooseAction;
 import org.sam.swing.table.action.JSTableDefaultAction;
+import org.sam.swing.utils.ReflectUtil;
 
 /**
  * 空编辑模式的editor对象
@@ -46,7 +47,27 @@ public class JSTableButtonEditor extends AbstractCellEditor implements TableCell
 	 * 当前的控件
 	 */
 	private JLabel label;
+	
+	/**
+	 * 显示actionbutton按钮操作
+	 * @param visible 是否显示
+	 */
+	public void setEnableActionButton(boolean visible) {
+		if (this.btnAction != null){
+			this.btnAction.setVisible(visible);
+		}
+	}
 
+	/**
+	 * 显示清空按钮
+	 * @param visible
+	 */
+	public void setEnableCanelButton(boolean visible) {
+		if (this.btnCancel != null){
+			this.btnCancel.setVisible(visible);
+		}
+	}
+	
 	/**
 	 * 按钮
 	 */
@@ -84,6 +105,27 @@ public class JSTableButtonEditor extends AbstractCellEditor implements TableCell
 	public void setAction(JSTableChooseAction action) {
 		this.action = action;
 	}
+	
+	/**
+	 * 用于显示的字段
+	 */
+	private String fieldName;
+
+	/**
+	 * 用于显示的字段
+	 * @return
+	 */
+	public String getFieldName() {
+		return fieldName;
+	}
+
+	/**
+	 * 用于显示的字段
+	 * @param fieldName
+	 */
+	public void setFieldName(String fieldName) {
+		this.fieldName = fieldName;
+	}
 
 	/**
 	 * 无参数构造函数
@@ -109,7 +151,8 @@ public class JSTableButtonEditor extends AbstractCellEditor implements TableCell
 	 */
 	public JSTableButtonEditor(String fieldName, JSTableChooseAction action) {
 		super();
-
+		this.setFieldName(fieldName);
+		
 		if (action == null) {
 			action = new JSTableDefaultAction();
 		}
@@ -152,7 +195,7 @@ public class JSTableButtonEditor extends AbstractCellEditor implements TableCell
 	 */
 	public void setValue(Object value) {
 		this.delegate.setValue(value);
-		this.label.setText(value == null ? "" : value.toString());
+		this.label.setText(ReflectUtil.getDisplay(value, fieldName));
 	}
 
 	/**
@@ -182,7 +225,7 @@ public class JSTableButtonEditor extends AbstractCellEditor implements TableCell
 	@Override
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 		delegate.setValue(value);
-		this.label.setText(value == null ? "" : value.toString());
+		this.label.setText(ReflectUtil.getDisplay(value, fieldName));
 		return this.panel;
 	}
 

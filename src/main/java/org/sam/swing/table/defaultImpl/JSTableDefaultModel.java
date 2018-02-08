@@ -12,6 +12,7 @@ import org.sam.swing.table.JSTableColumn;
 import org.sam.swing.table.JSTableModel;
 import org.sam.swing.table.JSTableModelLinster;
 import org.sam.swing.utils.Pair;
+import org.sam.swing.utils.ReflectUtil;
 
 /**
  * 默认的实体类型的数据操作对象
@@ -269,7 +270,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 				// 有数据绑定列
 
 				// 先判断get函数，没有get函数，才访问成员
-				Method method = this.getSetMethod(entity, colName);
+				Method method = ReflectUtil.getSetMethod(entity, colName);
 
 				if (method != null) {
 					datas[findColumn] = column.getDefaultValue();
@@ -328,7 +329,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 						datas[i] = null;
 					} else {
 
-						Pair<Boolean, Object> result = invokeGetMethod(e, colName);
+						Pair<Boolean, Object> result = ReflectUtil.invokeGetMethod(e, colName);
 
 						if (result.getKey()) {
 							datas[i] = result.getValue();
@@ -388,8 +389,8 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 				int iFind = this.findColumn(colName);
 				JSTableColumn curColumn = columns[iFind];
 
-				Method method = getSetMethod(entity,colName);
-				Method getMethod = getMethod(entity,colName);
+				Method method = ReflectUtil.getSetMethod(entity,colName);
+				Method getMethod = ReflectUtil.getMethod(entity,colName);
 
 				if (method != null) {
 					method.invoke(entity, this.getTableModelLinster().getDataTranstor(curColumn,
@@ -451,7 +452,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 							if (null == colName || colName.length() <= 0) {
 								datas[i] = null;
 							} else {
-								Pair<Boolean, Object> result = invokeGetMethod(entity, colName);
+								Pair<Boolean, Object> result = ReflectUtil.invokeGetMethod(entity, colName);
 
 								if (result.getKey()) {
 									datas[i] = result.getValue();
@@ -537,100 +538,5 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 
 		return true;
 	}
-
-	/**
-	 * 执行get method
-	 * 
-	 * @param entity
-	 * @param colName
-	 * @return
-	 */
-	private Pair<Boolean, Object> invokeGetMethod(Object entity, String colName) {
-
-		try {
-			// 先判断get函数，没有get函数，执行is函数
-			// 先判断get函数，没有get函数，执行is函数
-			Method method = null;
-			try {
-				method = this.getCls().getMethod("get" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
-			} catch (Exception ex) {
-				method = null;
-			}
-
-			if (method == null) {
-				method = this.getCls().getMethod("is" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
-			}
-			if (method != null) {
-				return new Pair<Boolean, Object>(true, method.invoke(entity));
-			}
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		return new Pair<Boolean, Object>(false, null);
-	}
 	
-	/**
-	 * 获取set method执行函数
-	 * 
-	 * @param entity
-	 * @param colName
-	 * @return
-	 */
-	private Method getMethod(Object entity, String colName) {
-
-		try {
-			Method method = null;
-			// 先判断get函数，没有get函数，执行is函数
-			try {
-				method = this.getCls().getMethod("get" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
-			} catch (Exception ex) {
-				method = null;
-			}
-
-			if (method == null) {
-				method = this.getCls().getMethod("is" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
-			}
-
-			return method;
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		return null;
-	}
-
-	/**
-	 * 获取set method执行函数
-	 * 
-	 * @param entity
-	 * @param colName
-	 * @return
-	 */
-	private Method getSetMethod(Object entity, String colName) {
-
-		try {
-			Method method = null;
-			// 先判断get函数，没有get函数，执行is函数
-			try {
-				method = this.getCls().getMethod("get" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
-			} catch (Exception ex) {
-				method = null;
-			}
-
-			if (method == null) {
-				method = this.getCls().getMethod("is" + colName.substring(0, 1).toUpperCase() + colName.substring(1));
-			}
-
-			return this.getCls().getMethod("set" + colName.substring(0, 1).toUpperCase() + colName.substring(1),
-					method.getReturnType());
-
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-
-		return null;
-	}
 }
