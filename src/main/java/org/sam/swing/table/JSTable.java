@@ -139,7 +139,7 @@ public class JSTable extends JXTable implements KeyListener {
 		this.setAutoscrolls(true);
 		this.setAutoResizeMode(JXTable.AUTO_RESIZE_OFF);
 		this.setSortable(true);
-		this.setRowHeight(20);
+		this.setRowHeight(24);
 		this.setColumnControlVisible(true);
 		this.setShowGrid(true, true);
 		this.addHighlighter(HighlighterFactory.createSimpleStriping(Color.LIGHT_GRAY));

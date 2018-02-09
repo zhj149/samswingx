@@ -73,13 +73,14 @@ public class JSTableFormatRenderer extends DefaultTableCellRenderer {
 		this.setFormat(formator);
 		this.setNullText(nullText);
 	}
-	
+
 	/**
 	 * 带有掩码格式的构造函数
+	 * 
 	 * @param formator
 	 */
 	public JSTableFormatRenderer(Format formator) {
-		this(formator,"");
+		this(formator, "");
 	}
 
 	/**
@@ -87,12 +88,9 @@ public class JSTableFormatRenderer extends DefaultTableCellRenderer {
 	 */
 	@Override
 	protected void setValue(Object value) {
-		try
-		{
+		try {
 			setText((value == null) ? (nullText == null ? "" : nullText) : format.format(value));
-		}
-		catch(Exception ex)
-		{	
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			setText("");
 		}
