@@ -119,6 +119,7 @@ public class JSTableDefaultBuilderImpl<E> implements JSTableBuilder<Collection<E
 	/**
 	 * {@inheritDoc}
 	 */
+	@Override
 	public JSTableModelLinster<Collection<E>> buildModelLinster(JSTableModel<Collection<E>> tableModel)
 			throws Exception {
 		JSTableModelLinster<Collection<E>> adapter = new JSTableModelDefaultAdapter<>();

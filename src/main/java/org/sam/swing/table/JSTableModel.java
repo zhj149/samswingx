@@ -360,23 +360,24 @@ public abstract class JSTableModel<T> extends DefaultTableModel implements Table
 	 * @throws Exception
 	 */
 	public abstract Object[] createNew() throws Exception;
-	
+
 	/**
 	 * 根据实体对象
-	 * @param data 查找数据所在的索引位置
+	 * 
+	 * @param data
+	 *            查找数据所在的索引位置
 	 * @return
 	 * @throws Exception
 	 */
-	public int findIndexOf(Object data) throws Exception{
+	public int findIndexOf(Object data) throws Exception {
 		int rowCount = this.getRowCount();
-		for( int i = 0 ; i < rowCount; i++){
+		for (int i = 0; i < rowCount; i++) {
 			if (this.getData(i) == data)
 				return i;
 		}
-		
+
 		return -1;
 	}
-	
 
 	/**
 	 * 清空所有当前显示数据 并且清空所有缓冲区
@@ -399,22 +400,38 @@ public abstract class JSTableModel<T> extends DefaultTableModel implements Table
 	/**
 	 * 替换掉行的数据操作
 	 * 
-	 * @param row 行
-	 * @param t 数据
+	 * @param row
+	 *            行
+	 * @param t
+	 *            数据
 	 * @throws Exception
 	 */
 	public abstract void replace(int row, Object t) throws Exception;
 	
 	/**
-	 * 更新一个单元格数据，但是不记录到系统里
-	 * @param aValue 新值
-	 * @param row 行号
-	 * @param column 列
+	 * 清空数据显示
 	 * @throws Exception
 	 */
-	public void updateValueAt(Object aValue , int row , int column) throws Exception{
+	public void removeAll() throws Exception{
+		for (int i = this.getRowCount() - 1; i >= 0; i--) {
+			this.removeRow(i);
+		}
+	}
+
+	/**
+	 * 更新一个单元格数据，但是不记录到系统里
+	 * 
+	 * @param aValue
+	 *            新值
+	 * @param row
+	 *            行号
+	 * @param column
+	 *            列
+	 * @throws Exception
+	 */
+	public void updateValueAt(Object aValue, int row, int column) throws Exception {
 		this.removeTableModelListener(this);
-		try{
+		try {
 			this.setValueAt(aValue, row, column);
 		} finally {
 			this.addTableModelListener(this);

@@ -29,7 +29,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 	/**
 	 * 原始的值
 	 */
-	private Collection<E> orginal;
+	private volatile Collection<E> orginal;
 
 	/**
 	 * 删除的对象集合o
@@ -88,7 +88,7 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 	 */
 	@Override
 	public Collection<E> getOrginal() {
-		return orginal;
+		return this.orginal;
 	}
 
 	/**

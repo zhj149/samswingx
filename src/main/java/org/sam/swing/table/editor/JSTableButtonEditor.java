@@ -21,6 +21,7 @@ import javax.swing.JTree;
 import javax.swing.table.TableCellEditor;
 import javax.swing.tree.TreeCellEditor;
 
+import org.apache.commons.lang3.StringUtils;
 import org.sam.swing.table.action.JSTableChooseAction;
 import org.sam.swing.table.action.JSTableDefaultAction;
 import org.sam.swing.utils.ReflectUtil;
@@ -195,7 +196,19 @@ public class JSTableButtonEditor extends AbstractCellEditor implements TableCell
 	 */
 	public void setValue(Object value) {
 		this.delegate.setValue(value);
-		this.label.setText(ReflectUtil.getDisplay(value, fieldName));
+		this.setText(value);
+	}
+	
+	/**
+	 * 
+	 * @param value
+	 */
+	private void setText(Object value){
+		if (StringUtils.isEmpty(this.fieldName)){
+			this.label.setText(value == null ? "" : value.toString());
+		}else{
+			this.label.setText(ReflectUtil.getDisplay(value, fieldName));
+		}
 	}
 
 	/**
@@ -225,7 +238,7 @@ public class JSTableButtonEditor extends AbstractCellEditor implements TableCell
 	@Override
 	public Component getTableCellEditorComponent(JTable table, Object value, boolean isSelected, int row, int column) {
 		delegate.setValue(value);
-		this.label.setText(ReflectUtil.getDisplay(value, fieldName));
+		this.setText(value);
 		return this.panel;
 	}
 

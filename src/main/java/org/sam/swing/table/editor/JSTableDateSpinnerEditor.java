@@ -2,6 +2,7 @@ package org.sam.swing.table.editor;
 
 import java.awt.Component;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.EventObject;
 
@@ -84,6 +85,15 @@ public class JSTableDateSpinnerEditor extends AbstractCellEditor implements Tree
 	 * @param format
 	 */
 	public JSTableDateSpinnerEditor(String format) {
+		super();
+		editor = new JSDateSpinner(format);
+	}
+	
+	/**
+	 * create with SimpleDateFormat
+	 * @param format
+	 */
+	public JSTableDateSpinnerEditor(SimpleDateFormat format) {
 		super();
 		editor = new JSDateSpinner(format);
 	}
