@@ -176,7 +176,7 @@ public class JSTable extends JXTable implements KeyListener {
 			throw new Exception("targetRow over index");
 
 		JSTableModel<?> module = (JSTableModel<?>) this.getModel();
-		module.moveRow(srcRow, tarRow);
+		module.moveRow(convertRowIndexToModel(srcRow), convertRowIndexToModel(tarRow));
 		this.changeSelection(tarRow, 0, false, false);
 	}
 	
