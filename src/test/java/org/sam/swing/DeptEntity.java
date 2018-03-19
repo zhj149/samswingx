@@ -21,6 +21,27 @@ public class DeptEntity {
 	 * 名称
 	 */
 	private String name;
+	
+	/**
+	 * 嵌套对象调用测试
+	 */
+	private TestEntity entity;
+	
+	/**
+	 * 嵌套对象调用测试
+	 * @return
+	 */
+	public TestEntity getEntity() {
+		return entity;
+	}
+
+	/**
+	 * 嵌套对象调用测试
+	 * @param entity
+	 */
+	public void setEntity(TestEntity entity) {
+		this.entity = entity;
+	}
 
 	/**
 	 * 主键

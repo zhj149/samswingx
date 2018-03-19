@@ -1,6 +1,6 @@
 package org.sam.swing.table.renderer;
 
-import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.JTable;
 
 /**
  * 表达式渲染器
@@ -8,7 +8,7 @@ import javax.swing.table.DefaultTableCellRenderer;
  * @author sam
  *
  */
-public class JSTableExpressionRenderer extends DefaultTableCellRenderer {
+public class JSTableExpressionRenderer extends JSTableDefaultCellRenderer {
 
 	/**
 	 * 
@@ -52,9 +52,9 @@ public class JSTableExpressionRenderer extends DefaultTableCellRenderer {
 	 * 设置显示值
 	 */
 	@Override
-	protected void setValue(Object value) {
-		if (this.el != null && value != null) {
-			setText(el.getText(value));
+	protected void setValue(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+		if (this.el != null) {
+			setText(el.getText(table, value, isSelected, hasFocus, row, column));
 		} else {
 			setText((value == null) ? "" : value.toString());
 		}
@@ -67,6 +67,6 @@ public class JSTableExpressionRenderer extends DefaultTableCellRenderer {
 	 *
 	 */
 	public interface Expression {
-		public String getText(Object value);
+		public String getText(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column);
 	}
 }

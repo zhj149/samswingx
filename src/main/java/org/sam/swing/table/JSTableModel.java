@@ -399,6 +399,7 @@ public abstract class JSTableModel<T> extends DefaultTableModel implements Table
 
 	/**
 	 * 替换掉行的数据操作
+	 * 但是不记录到系统里
 	 * 
 	 * @param row
 	 *            行

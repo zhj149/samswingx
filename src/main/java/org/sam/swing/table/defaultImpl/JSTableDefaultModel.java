@@ -7,7 +7,6 @@ import java.util.LinkedList;
 
 import javax.swing.event.TableModelEvent;
 
-import org.apache.commons.lang3.NotImplementedException;
 import org.sam.swing.table.JSTableColumn;
 import org.sam.swing.table.JSTableModel;
 import org.sam.swing.table.JSTableModelLinster;
@@ -354,7 +353,37 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 	 */
 	@Override
 	public void replace(int row, Object t) throws Exception {
-		throw new NotImplementedException("there is nothing");
+		try{
+			this.removeTableModelListener(this);
+			// 假设已经生成完成了列的映射，然后根据列绑定的次序我们插入数据
+			// 数据集合
+			for (int i = 0; i < getColumnCount(); i++) {
+				String colName = getColumnName(i);
+				if (JSTableColumn.COLUMN_ORIGINAL.equals(colName)) {
+					this.setValueAt(t, row, i);
+				} else {
+					if (null == colName || colName.length() <= 0) {
+						this.setValueAt(null, row, i);
+					} else {
+						Pair<Boolean, Object> result = ReflectUtil.invokeGetMethod(t, colName);
+
+						if (result.getKey()) {
+							this.setValueAt(result.getValue(), row, i);
+						} else {
+							Field field = this.getCls().getDeclaredField(colName);
+							if (field == null)
+								continue;
+							field.setAccessible(true);
+							this.setValueAt(field.get(t), row, i);
+						}
+					}
+				}
+			}
+		}catch(Exception ex){
+			ex.printStackTrace();
+		} finally{
+			this.addTableModelListener(this);
+		}
 	}
 
 	/*
@@ -384,6 +413,10 @@ public class JSTableDefaultModel<E> extends JSTableModel<Collection<E>> {
 				String colName = this.getColumnName(e.getColumn());
 				if (colName == null || colName.length() <= 0)
 					return;
+				
+				if (JSTableColumn.COLUMN_ORIGINAL.equals(colName)){
+					return;
+				}
 
 				JSTableColumn[] columns = this.getTableColumns();
 				int iFind = this.findColumn(colName);
